@@ -348,4 +348,10 @@ Public Class WelcomeScreen
         Catch ex As Exception
         End Try
     End Sub
+
+    Private Sub Timer6_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer6.Tick
+        If Me.WindowState = 2 Then
+            Me.WindowState = 0
+        End If
+    End Sub
 End Class

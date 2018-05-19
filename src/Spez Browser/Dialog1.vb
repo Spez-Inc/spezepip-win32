@@ -240,7 +240,7 @@ Public Class Dialog1
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        CType(Form1.TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("spezbrowserthemes.weebly.com")
+        CType(Form1.TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("spezappsthemes.weebly.com")
         Me.Close()
     End Sub
 End Class

@@ -40,6 +40,7 @@ Partial Class WelcomeScreen
         Me.btn_next_001 = New System.Windows.Forms.Button()
         Me.Timer4 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer5 = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer6 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -219,6 +220,11 @@ Partial Class WelcomeScreen
         '
         Me.Timer5.Interval = 1
         '
+        'Timer6
+        '
+        Me.Timer6.Enabled = True
+        Me.Timer6.Interval = 1
+        '
         'WelcomeScreen
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -238,6 +244,8 @@ Partial Class WelcomeScreen
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximumSize = New System.Drawing.Size(800, 640)
+        Me.MinimumSize = New System.Drawing.Size(800, 640)
         Me.Name = "WelcomeScreen"
         Me.Text = "Spez Bijiben"
         Me.TransparencyKey = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(36, Byte), Integer))
@@ -262,4 +270,5 @@ Partial Class WelcomeScreen
     Friend WithEvents btn_next_001 As System.Windows.Forms.Button
     Friend WithEvents Timer4 As System.Windows.Forms.Timer
     Friend WithEvents Timer5 As System.Windows.Forms.Timer
+    Friend WithEvents Timer6 As System.Windows.Forms.Timer
 End Class

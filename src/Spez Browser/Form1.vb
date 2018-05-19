@@ -81,6 +81,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
+
         Dim NewBrowser As New GeckoWebBrowser()
         Dim NewTab As New TabPage
         NewBrowser.Tag = NewTab
@@ -439,7 +440,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Refresh()
+        CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Reload()
     End Sub
 
     Private Sub CloseTabToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
