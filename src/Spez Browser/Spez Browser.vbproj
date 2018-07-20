@@ -178,7 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="My Project\app.manifest" />
+    <None Include="My Project\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -224,13 +226,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\menu icon.png" />
-    <None Include="Resources\spez browser icon.png" />
     <None Include="Resources\spez-search-icon-ver-8.png" />
     <None Include="Resources\button.png" />
     <None Include="Resources\blur.png" />
     <None Include="Resources\1.png" />
     <None Include="Resources\2.png" />
     <None Include="Resources\ss3.png" />
+    <None Include="Resources\spez browser icon.PNG" />
+    <None Include="Resources\checkbox-unchecked.png" />
+    <None Include="Resources\checkbox-checked.png" />
+    <None Include="Resources\tabbuttonstart.png" />
+    <None Include="Resources\utabbuttonend.png" />
+    <None Include="Resources\utabbuttonmiddle.png" />
+    <None Include="Resources\utabbuttonstart.png" />
+    <None Include="Resources\tabbuttonend.png" />
+    <None Include="Resources\tabbuttonmiddle.png" />
     <Content Include="spez browser icon.png.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

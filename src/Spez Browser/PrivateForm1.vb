@@ -97,7 +97,7 @@ Public Class PrivateForm1
     End Sub
     Private Sub LoadingWeb(ByVal sender As Object, ByVal e As GeckoProgressEventArgs)
         ProgressBar1.Show()
-        ProgressBar1.Width = 10
+        ProgressBar1.Width = 1
         ProgressBar1.Maximum = e.MaximumProgress
         ProgressBar1.Value = e.MaximumProgress
     End Sub
@@ -141,8 +141,6 @@ Public Class PrivateForm1
             MsgBox("Spez Browser no more supports Windows XP and Vista.", vbCritical, "Sorry for that.")
             End
         End If
-        Xpcom.Initialize("data/engine/")
-
 
         Dim field = GetType(GeckoWebBrowser).GetField("WebBrowser")
         If field IsNot Nothing Then
@@ -153,42 +151,42 @@ Public Class PrivateForm1
 
         '-----------------------------------------------------------
 
-            'text
-            DocTitle.ForeColor = Color.White
+        'text
+        DocTitle.ForeColor = Color.White
 
-            'form
+        'form
         BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\dark\bg.png"))
-            FormBorderStyle = Nothing
+        FormBorderStyle = Nothing
 
-            'buttonmain
+        'buttonmain
         Button1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\back.png"))
-            Button1.Text = ""
-            Button1.FlatStyle = FlatStyle.Flat
+        Button1.Text = ""
+        Button1.FlatStyle = FlatStyle.Flat
         Button2.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\next.png"))
-            Button2.Text = ""
-            Button2.FlatStyle = FlatStyle.Flat
+        Button2.Text = ""
+        Button2.FlatStyle = FlatStyle.Flat
         Button3.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\reload.png"))
-            Button3.Text = ""
-            Button3.FlatStyle = FlatStyle.Flat
+        Button3.Text = ""
+        Button3.FlatStyle = FlatStyle.Flat
         Button6.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\addtab.png"))
-            Button6.Text = ""
-            Button6.FlatStyle = FlatStyle.Flat
+        Button6.Text = ""
+        Button6.FlatStyle = FlatStyle.Flat
         Button5.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\menu.png"))
-            Button5.Text = ""
-            Button5.FlatStyle = FlatStyle.Flat
+        Button5.Text = ""
+        Button5.FlatStyle = FlatStyle.Flat
 
-            'buttoncm
+        'buttoncm
         Button4.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\Close.png"))
         Button7.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\fullscreen.png"))
         Button8.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\Dark\minimize.png"))
-            Button4.Text = ""
-            Button4.FlatStyle = FlatStyle.Flat
-            Button7.Text = ""
-            Button7.FlatStyle = FlatStyle.Flat
-            Button8.Text = ""
-            Button8.FlatStyle = FlatStyle.Flat
+        Button4.Text = ""
+        Button4.FlatStyle = FlatStyle.Flat
+        Button7.Text = ""
+        Button7.FlatStyle = FlatStyle.Flat
+        Button8.Text = ""
+        Button8.FlatStyle = FlatStyle.Flat
 
-       
+
         '-----------------------------------------------------------
         If My.Settings.WelcomeScreen = True Then
             Me.Hide()
@@ -210,16 +208,22 @@ Public Class PrivateForm1
             BookmarksToolStripMenuItem.Text = "Yer imleri"
             AddThisWebsiteToBookmarksToolStripMenuItem.Text = "Bu Web Sitesini Yer İmlerine Ekle"
             ShowBookmarksToolStripMenuItem.Text = "Yer İmlerini Göster"
-            SettingsStripMenuItem1.Text = "Ayarlar"
+            'FavoritesToolStripMenuItem.Text = "Favoriler"
+            'AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Bu Web Sitesini Favorilere Ekle"
+            'ShowFavoritesToolStripMenuItem.Text = "Favorileri Göster"
+            SettingsStripMenuItem1.Text = "Tercihler"
+            SupportToolStripMenuItem.Text = "Destek"
             AboutSpezBrowserToolStripMenuItem.Text = "Spez Browser Hakkında"
             ExitToolStripMenuItem.Text = "Çık"
             Library.TabPage1.Text = "Geçmiş"
             Library.TabPage2.Text = "Yer imleri"
-            Library.Button1.Text = "Geçmişi Temizle"
+            Library.TabPage3.Text = "Favoriler"
             Library.Button2.Text = "Geçmişten Sil"
             Library.Button3.Text = "Web Sayfasına Git"
             Library.Button4.Text = "Web Sayfasına Git"
             Library.Button5.Text = "Yer imlerinden Sil"
+            Library.Button1.Text = "Web Sayfasına Git"
+            Library.Button6.Text = "Favorilerden Sil"
             Library.Text = "Kitaplık"
             HTMLEdit.Text = "HTML Editör"
             HTMLEdit.FileToolStripMenuItem.Text = "Dosya"
@@ -230,7 +234,7 @@ Public Class PrivateForm1
             HTMLEdit.UndoToolStripMenuItem.Text = "Geri Al"
             HTMLEdit.RedoToolStripMenuItem.Text = "İleri Al"
             HTMLEdit.PreviewToolStripMenuItem.Text = "Önizleme (CTRL + T)"
-            Dialog1.Text = "Ayarlar"
+            Dialog1.Text = "Tercihler"
             Dialog1.GroupBox1.Text = "Dil"
             Dialog1.Label1.Text = "(Çeviriler %100 Değildir.)"
             Dialog1.GroupBox2.Text = "Ana Sayfa"
@@ -254,16 +258,22 @@ Public Class PrivateForm1
             BookmarksToolStripMenuItem.Text = "Bookmarks"
             AddThisWebsiteToBookmarksToolStripMenuItem.Text = "Add This Website To Bookmarks"
             ShowBookmarksToolStripMenuItem.Text = "Show Bookmarks"
-            SettingsStripMenuItem1.Text = "Settings"
+            'FavoritesToolStripMenuItem.Text = "Favorites"
+            'AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Add This Website To Favorites"
+            'ShowFavoritesToolStripMenuItem.Text = "Show Favorites"
+            SettingsStripMenuItem1.Text = "Preferences"
+            SupportToolStripMenuItem.Text = "Support"
             AboutSpezBrowserToolStripMenuItem.Text = "About Spez Browser"
             ExitToolStripMenuItem.Text = "Exit"
             Library.TabPage1.Text = "History"
             Library.TabPage2.Text = "Bookmarks"
-            Library.Button1.Text = "Clear History"
+            Library.TabPage2.Text = "Favorites"
             Library.Button2.Text = "Remove From History"
             Library.Button3.Text = "Go to Website"
             Library.Button4.Text = "Go to Website"
             Library.Button5.Text = "Remove From Bookmarks"
+            Library.Button1.Text = "Go to Website"
+            Library.Button6.Text = "Remove From Favorites"
             Library.Text = "Library"
             HTMLEdit.Text = "HTML Editor"
             HTMLEdit.FileToolStripMenuItem.Text = "File"
@@ -274,7 +284,7 @@ Public Class PrivateForm1
             HTMLEdit.UndoToolStripMenuItem.Text = "Undo"
             HTMLEdit.RedoToolStripMenuItem.Text = "Redo"
             HTMLEdit.PreviewToolStripMenuItem.Text = "Preview (CTRL + T)"
-            Dialog1.Text = "Settings"
+            Dialog1.Text = "Preferences"
             Dialog1.GroupBox1.Text = "Language"
             Dialog1.Label1.Text = "(Translations are not 100%.)"
             Dialog1.GroupBox2.Text = "Homepage"
@@ -604,12 +614,12 @@ Public Class PrivateForm1
         Button7.PerformClick()
     End Sub
 
-    Private Sub NewPrivateBrowsingWindowToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewPrivateBrowsingWindowToolStripMenuItem.Click
+    Private Sub NewPrivateBrowsingWindowToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewPrivateBrowsingWindowToolStripMenuItem.Click
         Dim newwin As New PrivateForm1
         newwin.Show()
     End Sub
 
-    Private Sub ExitPrintPreviewToolStripMenuItem_Click_1(sender As System.Object, e As System.EventArgs) Handles ExitPrintPreviewToolStripMenuItem.Click
+    Private Sub ExitPrintPreviewToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitPrintPreviewToolStripMenuItem.Click
         Dim printSettingsSvc = Xpcom.GetService(Of nsIPrintSettingsService)("@mozilla.org/gfx/printsettings-service;1")
         Dim printSettings As nsIPrintSettings = printSettingsSvc.GetNewPrintSettingsAttribute()
         Dim docShell As nsIDocShell = Xpcom.QueryInterface(Of nsIDocShell)(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).WebBrowserFocus)
@@ -626,5 +636,14 @@ Public Class PrivateForm1
         Else
             ProgressBar1.Height = 3
         End If
+    End Sub
+
+    Private Sub SupportToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SupportToolStripMenuItem.Click
+        CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("https://spezcomputerhelp.weebly.com/spez-apps.html")
+    End Sub
+
+    Private Sub ShowFavoritesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ShowFavoritesToolStripMenuItem.Click
+        Library.Show()
+        Library.TabControl1.SelectedIndex = 2
     End Sub
 End Class

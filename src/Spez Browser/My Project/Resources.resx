@@ -172,4 +172,28 @@
   <data name="ss3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ss3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="checkbox_checked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\checkbox-checked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="checkbox_unchecked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\checkbox-unchecked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tabbuttonend" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tabbuttonend.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tabbuttonmiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tabbuttonmiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tabbuttonstart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tabbuttonstart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="utabbuttonend" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\utabbuttonend.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="utabbuttonmiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\utabbuttonmiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="utabbuttonstart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\utabbuttonstart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

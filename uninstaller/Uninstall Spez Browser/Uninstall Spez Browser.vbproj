@@ -52,7 +52,7 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>uninstaller brow.ico</ApplicationIcon>
+    <ApplicationIcon>uninstaller brow8.2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -137,7 +137,13 @@
     <None Include="Resources\button.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\bg.png" />
+    <None Include="Resources\close.png" />
+    <None Include="Resources\closehover.png" />
+    <None Include="Resources\minimize.png" />
+    <None Include="Resources\minimizehover.png" />
     <Content Include="uninstaller brow.ico" />
+    <Content Include="uninstaller brow8.2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

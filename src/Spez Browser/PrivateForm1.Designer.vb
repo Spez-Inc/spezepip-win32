@@ -53,7 +53,11 @@ Partial Class PrivateForm1
         Me.BookmarksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddThisWebsiteToBookmarksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowBookmarksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FavoritesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddThisWebsiteToFavoritesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowFavoritesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SupportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutSpezBrowserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -157,7 +161,7 @@ Partial Class PrivateForm1
         Me.SettingsStripMenuItem1.Enabled = False
         Me.SettingsStripMenuItem1.Name = "SettingsStripMenuItem1"
         Me.SettingsStripMenuItem1.Size = New System.Drawing.Size(302, 22)
-        Me.SettingsStripMenuItem1.Text = "Settings"
+        Me.SettingsStripMenuItem1.Text = "Preferences"
         '
         'Panel1
         '
@@ -273,9 +277,9 @@ Partial Class PrivateForm1
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewTabToolStripMenuItem1, Me.NewWindowToolStripMenuItem, Me.NewPrivateBrowsingWindowToolStripMenuItem, Me.ToolStripSeparator4, Me.PrintToolStripMenuItem, Me.PrintPreviewToolStripMenuItem, Me.ExitPrintPreviewToolStripMenuItem, Me.SavePageToolStripMenuItem, Me.HTMLEditorToolStripMenuItem, Me.ToolStripSeparator2, Me.HistoryToolStripMenuItem, Me.BookmarksToolStripMenuItem, Me.ToolStripSeparator3, Me.SettingsStripMenuItem1, Me.AboutSpezBrowserToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewTabToolStripMenuItem1, Me.NewWindowToolStripMenuItem, Me.NewPrivateBrowsingWindowToolStripMenuItem, Me.ToolStripSeparator4, Me.PrintToolStripMenuItem, Me.PrintPreviewToolStripMenuItem, Me.ExitPrintPreviewToolStripMenuItem, Me.SavePageToolStripMenuItem, Me.HTMLEditorToolStripMenuItem, Me.ToolStripSeparator2, Me.HistoryToolStripMenuItem, Me.BookmarksToolStripMenuItem, Me.FavoritesToolStripMenuItem, Me.ToolStripSeparator3, Me.SettingsStripMenuItem1, Me.SupportToolStripMenuItem, Me.AboutSpezBrowserToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(303, 314)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(303, 358)
         '
         'NewTabToolStripMenuItem1
         '
@@ -373,10 +377,39 @@ Partial Class PrivateForm1
         Me.ShowBookmarksToolStripMenuItem.Size = New System.Drawing.Size(244, 22)
         Me.ShowBookmarksToolStripMenuItem.Text = "Show Bookmarks"
         '
+        'FavoritesToolStripMenuItem
+        '
+        Me.FavoritesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddThisWebsiteToFavoritesToolStripMenuItem, Me.ShowFavoritesToolStripMenuItem})
+        Me.FavoritesToolStripMenuItem.Name = "FavoritesToolStripMenuItem"
+        Me.FavoritesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
+        Me.FavoritesToolStripMenuItem.Size = New System.Drawing.Size(302, 22)
+        Me.FavoritesToolStripMenuItem.Text = "Favorites"
+        '
+        'AddThisWebsiteToFavoritesToolStripMenuItem
+        '
+        Me.AddThisWebsiteToFavoritesToolStripMenuItem.Enabled = False
+        Me.AddThisWebsiteToFavoritesToolStripMenuItem.Name = "AddThisWebsiteToFavoritesToolStripMenuItem"
+        Me.AddThisWebsiteToFavoritesToolStripMenuItem.Size = New System.Drawing.Size(232, 22)
+        Me.AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Add This Website To Favorites"
+        '
+        'ShowFavoritesToolStripMenuItem
+        '
+        Me.ShowFavoritesToolStripMenuItem.Name = "ShowFavoritesToolStripMenuItem"
+        Me.ShowFavoritesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
+        Me.ShowFavoritesToolStripMenuItem.Size = New System.Drawing.Size(232, 22)
+        Me.ShowFavoritesToolStripMenuItem.Text = "Show Favorites"
+        '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
         Me.ToolStripSeparator3.Size = New System.Drawing.Size(299, 6)
+        '
+        'SupportToolStripMenuItem
+        '
+        Me.SupportToolStripMenuItem.Name = "SupportToolStripMenuItem"
+        Me.SupportToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
+        Me.SupportToolStripMenuItem.Size = New System.Drawing.Size(302, 22)
+        Me.SupportToolStripMenuItem.Text = "Support"
         '
         'AboutSpezBrowserToolStripMenuItem
         '
@@ -426,7 +459,7 @@ Partial Class PrivateForm1
         Me.ProgressBar1.ForeColor = System.Drawing.Color.DeepSkyBlue
         Me.ProgressBar1.Location = New System.Drawing.Point(2, 62)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(796, 3)
+        Me.ProgressBar1.Size = New System.Drawing.Size(796, 1)
         Me.ProgressBar1.TabIndex = 6
         '
         'LeftR
@@ -478,10 +511,10 @@ Partial Class PrivateForm1
         Me.TabControl1.ContextMenuStrip = Me.TabRightClick
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.ImageList = Me.ImageList1
-        Me.TabControl1.Location = New System.Drawing.Point(2, 65)
+        Me.TabControl1.Location = New System.Drawing.Point(2, 63)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(796, 533)
+        Me.TabControl1.Size = New System.Drawing.Size(796, 535)
         Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.TabControl1.TabIndex = 11
         '
@@ -588,5 +621,9 @@ Partial Class PrivateForm1
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ExitPrintPreviewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Timer2 As System.Windows.Forms.Timer
+    Friend WithEvents SupportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FavoritesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents AddThisWebsiteToFavoritesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ShowFavoritesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

@@ -149,7 +149,7 @@ Partial Class WelcomeScreen
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(776, 104)
         Me.Label2.TabIndex = 9
-        Me.Label2.Text = "(You Can Change Language From ""Settings"" Menu.)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(""Ayarlar"" Menüsünden Dili Değiş" & _
+        Me.Label2.Text = "(You Can Change Language From ""Preferences"" Menu.)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(""Tercihler"" Menüsünden Dili Değiş" & _
             "tirebilirsiniz.)"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.Label2.Visible = False

@@ -4,6 +4,9 @@ Imports System.IO
 Imports Gecko
 
 Public Class Dialog1
+    Dim Check1Checked As Boolean = False
+    Dim Check2Checked As Boolean = False
+    Dim Check3Checked As Boolean = False
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
@@ -24,16 +27,22 @@ Public Class Dialog1
             Form1.BookmarksToolStripMenuItem.Text = "Yer imleri"
             Form1.AddThisWebsiteToBookmarksToolStripMenuItem.Text = "Bu Web Sitesini Yer İmlerine Ekle"
             Form1.ShowBookmarksToolStripMenuItem.Text = "Yer İmlerini Göster"
-            Form1.SettingsStripMenuItem1.Text = "Ayarlar"
+            Form1.FavoritesToolStripMenuItem.Text = "Favoriler"
+            Form1.AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Bu Web Sitesini Favorilere Ekle"
+            Form1.ShowFavoritesToolStripMenuItem.Text = "Favorileri Göster"
+            Form1.SettingsStripMenuItem1.Text = "Tercihler"
+            Form1.SupportToolStripMenuItem.Text = "Destek"
             Form1.AboutSpezBrowserToolStripMenuItem.Text = "Spez Browser Hakkında"
             Form1.ExitToolStripMenuItem.Text = "Çık"
             Library.TabPage1.Text = "Geçmiş"
             Library.TabPage2.Text = "Yer imleri"
-            Library.Button1.Text = "Geçmişi Temizle"
+            Library.TabPage3.Text = "Favoriler"
             Library.Button2.Text = "Geçmişten Sil"
             Library.Button3.Text = "Web Sayfasına Git"
             Library.Button4.Text = "Web Sayfasına Git"
             Library.Button5.Text = "Yer imlerinden Sil"
+            Library.Button1.Text = "Web Sayfasına Git"
+            Library.Button6.Text = "Favorilerden Sil"
             Library.Text = "Kitaplık"
             HTMLEdit.Text = "HTML Editör"
             HTMLEdit.FileToolStripMenuItem.Text = "Dosya"
@@ -44,7 +53,7 @@ Public Class Dialog1
             HTMLEdit.UndoToolStripMenuItem.Text = "Geri Al"
             HTMLEdit.RedoToolStripMenuItem.Text = "İleri Al"
             HTMLEdit.PreviewToolStripMenuItem.Text = "Önizleme (CTRL + T)"
-            Me.Text = "Ayarlar"
+            Me.Text = "Tercihler"
             GroupBox1.Text = "Dil"
             Label1.Text = "(Çeviriler %100 Değildir.)"
             GroupBox2.Text = "Ana Sayfa"
@@ -68,16 +77,22 @@ Public Class Dialog1
             Form1.BookmarksToolStripMenuItem.Text = "Bookmarks"
             Form1.AddThisWebsiteToBookmarksToolStripMenuItem.Text = "Add This Website To Bookmarks"
             Form1.ShowBookmarksToolStripMenuItem.Text = "Show Bookmarks"
-            Form1.SettingsStripMenuItem1.Text = "Settings"
+            Form1.FavoritesToolStripMenuItem.Text = "Favorites"
+            Form1.AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Add This Website To Favorites"
+            Form1.ShowFavoritesToolStripMenuItem.Text = "Show Favorites"
+            Form1.SettingsStripMenuItem1.Text = "Preferences"
+            Form1.SupportToolStripMenuItem.Text = "Support"
             Form1.AboutSpezBrowserToolStripMenuItem.Text = "About Spez Browser"
             Form1.ExitToolStripMenuItem.Text = "Exit"
             Library.TabPage1.Text = "History"
             Library.TabPage2.Text = "Bookmarks"
-            Library.Button1.Text = "Clear History"
+            Library.TabPage2.Text = "Favorites"
             Library.Button2.Text = "Remove From History"
             Library.Button3.Text = "Go to Website"
             Library.Button4.Text = "Go to Website"
             Library.Button5.Text = "Remove From Bookmarks"
+            Library.Button1.Text = "Go to Website"
+            Library.Button6.Text = "Remove From Favorites"
             Library.Text = "Library"
             HTMLEdit.Text = "HTML Editor"
             HTMLEdit.FileToolStripMenuItem.Text = "File"
@@ -88,7 +103,7 @@ Public Class Dialog1
             HTMLEdit.UndoToolStripMenuItem.Text = "Undo"
             HTMLEdit.RedoToolStripMenuItem.Text = "Redo"
             HTMLEdit.PreviewToolStripMenuItem.Text = "Preview (CTRL + T)"
-            Me.Text = "Settings"
+            Me.Text = "Preferences"
             GroupBox1.Text = "Language"
             Label1.Text = "(Translations are not 100%.)"
             GroupBox2.Text = "Homepage"
@@ -101,6 +116,8 @@ Public Class Dialog1
             My.Settings.Theme = ListView1.SelectedItems(0).Text
         Catch ex As Exception
         End Try
+        My.Settings.Save()
+        My.Settings.Save()
         My.Settings.Save()
         Me.Close()
         If My.Settings.Theme = "Windows Style" Then
@@ -214,6 +231,7 @@ Public Class Dialog1
             Form1.Button8.FlatStyle = FlatStyle.Flat
 
         End If
+        My.Settings.Save()
     End Sub
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
@@ -242,5 +260,49 @@ Public Class Dialog1
     Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         CType(Form1.TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("spezappsthemes.weebly.com")
         Me.Close()
+    End Sub
+
+    Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
+        My.Settings.Homepage = "file:\\\" & Application.StartupPath & "\data\htmldoc\new-tab.html"
+        My.Settings.Lang = "English"
+        My.Settings.Theme = "Default"
+        My.Settings.WelcomeScreen = True
+        My.Settings.Save()
+        Dim result As Integer = MessageBox.Show("The Spez Browser needs to be restarted to finish the process. Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If result = DialogResult.OK Then
+            Application.Restart()
+        End If
+    End Sub
+
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        My.Settings.History.Clear()
+        Library.ListBox1.Items.Clear()
+        My.Settings.Save()
+    End Sub
+
+    Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
+        Dim CookieMan As nsICookieManager
+        CookieMan = Xpcom.GetService(Of nsICookieManager)("@mozilla.org/cookiemanager;1")
+        CookieMan = Xpcom.QueryInterface(Of nsICookieManager)(CookieMan)
+        CookieMan.RemoveAll()
+    End Sub
+
+    Private Sub LinkLabel2_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+        Dim CookieMan As nsICookieManager
+        CookieMan = Xpcom.GetService(Of nsICookieManager)("@mozilla.org/cookiemanager;1")
+        CookieMan = Xpcom.QueryInterface(Of nsICookieManager)(CookieMan)
+        CookieMan.RemoveAll()
+        My.Settings.History.Clear()
+        Library.ListBox1.Items.Clear()
+        My.Settings.Save()
+        My.Settings.Homepage = "file:\\\" & Application.StartupPath & "\data\htmldoc\new-tab.html"
+        My.Settings.Lang = "English"
+        My.Settings.Theme = "Default"
+        My.Settings.WelcomeScreen = True
+        My.Settings.Save()
+        Dim result As Integer = MessageBox.Show("The Spez Browser needs to be restarted to finish the process. Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If result = DialogResult.OK Then
+            Application.Restart()
+        End If
     End Sub
 End Class

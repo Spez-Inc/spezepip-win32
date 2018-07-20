@@ -98,7 +98,7 @@ Public Class Form1
     End Sub
     Private Sub LoadingWeb(ByVal sender As Object, ByVal e As GeckoProgressEventArgs)
         ProgressBar1.Show()
-        ProgressBar1.Width = 10
+        ProgressBar1.Width = 1
         ProgressBar1.Maximum = e.MaximumProgress
         ProgressBar1.Value = e.MaximumProgress
     End Sub
@@ -145,7 +145,6 @@ Public Class Form1
             MsgBox("Spez Browser no more supports Windows XP and Vista.", vbCritical, "Sorry for that.")
             End
         End If
-        Xpcom.Initialize("data/engine/")
         '-----------------------------------------------------------
         If My.Settings.Theme = "Windows Style" Then
 
@@ -279,16 +278,22 @@ Public Class Form1
             BookmarksToolStripMenuItem.Text = "Yer imleri"
             AddThisWebsiteToBookmarksToolStripMenuItem.Text = "Bu Web Sitesini Yer İmlerine Ekle"
             ShowBookmarksToolStripMenuItem.Text = "Yer İmlerini Göster"
-            SettingsStripMenuItem1.Text = "Ayarlar"
+            FavoritesToolStripMenuItem.Text = "Favoriler"
+            AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Bu Web Sitesini Favorilere Ekle"
+            ShowFavoritesToolStripMenuItem.Text = "Favorileri Göster"
+            SettingsStripMenuItem1.Text = "Tercihler"
+            SupportToolStripMenuItem.Text = "Destek"
             AboutSpezBrowserToolStripMenuItem.Text = "Spez Browser Hakkında"
             ExitToolStripMenuItem.Text = "Çık"
             Library.TabPage1.Text = "Geçmiş"
             Library.TabPage2.Text = "Yer imleri"
-            Library.Button1.Text = "Geçmişi Temizle"
+            Library.TabPage3.Text = "Favoriler"
             Library.Button2.Text = "Geçmişten Sil"
             Library.Button3.Text = "Web Sayfasına Git"
             Library.Button4.Text = "Web Sayfasına Git"
             Library.Button5.Text = "Yer imlerinden Sil"
+            Library.Button1.Text = "Web Sayfasına Git"
+            Library.Button6.Text = "Favorilerden Sil"
             Library.Text = "Kitaplık"
             HTMLEdit.Text = "HTML Editör"
             HTMLEdit.FileToolStripMenuItem.Text = "Dosya"
@@ -299,7 +304,7 @@ Public Class Form1
             HTMLEdit.UndoToolStripMenuItem.Text = "Geri Al"
             HTMLEdit.RedoToolStripMenuItem.Text = "İleri Al"
             HTMLEdit.PreviewToolStripMenuItem.Text = "Önizleme (CTRL + T)"
-            Dialog1.Text = "Ayarlar"
+            Dialog1.Text = "Tercihler"
             Dialog1.GroupBox1.Text = "Dil"
             Dialog1.Label1.Text = "(Çeviriler %100 Değildir.)"
             Dialog1.GroupBox2.Text = "Ana Sayfa"
@@ -323,16 +328,22 @@ Public Class Form1
             BookmarksToolStripMenuItem.Text = "Bookmarks"
             AddThisWebsiteToBookmarksToolStripMenuItem.Text = "Add This Website To Bookmarks"
             ShowBookmarksToolStripMenuItem.Text = "Show Bookmarks"
-            SettingsStripMenuItem1.Text = "Settings"
+            FavoritesToolStripMenuItem.Text = "Favorites"
+            AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Add This Website To Favorites"
+            ShowFavoritesToolStripMenuItem.Text = "Show Favorites"
+            SettingsStripMenuItem1.Text = "Preferences"
+            SupportToolStripMenuItem.Text = "Support"
             AboutSpezBrowserToolStripMenuItem.Text = "About Spez Browser"
             ExitToolStripMenuItem.Text = "Exit"
             Library.TabPage1.Text = "History"
             Library.TabPage2.Text = "Bookmarks"
-            Library.Button1.Text = "Clear History"
+            Library.TabPage2.Text = "Favorites"
             Library.Button2.Text = "Remove From History"
             Library.Button3.Text = "Go to Website"
             Library.Button4.Text = "Go to Website"
             Library.Button5.Text = "Remove From Bookmarks"
+            Library.Button1.Text = "Go to Website"
+            Library.Button6.Text = "Remove From Favorites"
             Library.Text = "Library"
             HTMLEdit.Text = "HTML Editor"
             HTMLEdit.FileToolStripMenuItem.Text = "File"
@@ -343,7 +354,7 @@ Public Class Form1
             HTMLEdit.UndoToolStripMenuItem.Text = "Undo"
             HTMLEdit.RedoToolStripMenuItem.Text = "Redo"
             HTMLEdit.PreviewToolStripMenuItem.Text = "Preview (CTRL + T)"
-            Dialog1.Text = "Settings"
+            Dialog1.Text = "Preferences"
             Dialog1.GroupBox1.Text = "Language"
             Dialog1.Label1.Text = "(Translations are not 100%.)"
             Dialog1.GroupBox2.Text = "Homepage"
@@ -653,9 +664,10 @@ Public Class Form1
     End Sub
 
     Private Sub SettingsStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SettingsStripMenuItem1.Click
-        On Error Resume Next
-        Dialog1.ShowDialog()
-        On Error Resume Next
+        Try
+            Dialog1.ShowDialog()
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub NewTabToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -670,7 +682,10 @@ Public Class Form1
     End Sub
 
     Private Sub AboutSpezBrowserToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutSpezBrowserToolStripMenuItem.Click
-        About.ShowDialog()
+        Try
+            About.ShowDialog()
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub NewTabToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewTabToolStripMenuItem1.Click
@@ -749,9 +764,33 @@ Public Class Form1
         End Try
     End Sub
 
+    Public Sub OpenFavs()
+        Try
+            Dim a As String
+            Dim b As String
+            a = "/data/htmldoc/files/spezbrowser/favorites.html"
+            b = InStr(TextBox1.Text, a)
+            If b Then
+                Timer1.Enabled = False
+                Button1.PerformClick()
+                Dim c As String
+                Dim d As String
+                c = "/data/htmldoc/files/spezbrowser/favorites.html"
+                d = InStr(TextBox1.Text, a)
+                If d Then
+                    ShowFavoritesToolStripMenuItem.PerformClick()
+                    Timer1.Enabled = True
+                    Timer2.Enabled = True
+                End If
+            End If
+        Catch ex As Exception
+        End Try
+    End Sub
+
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         OpenHistory()
         OpenBookmarks()
+        OpenFavs()
     End Sub
 
     Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
@@ -766,5 +805,19 @@ Public Class Form1
         Else
             ProgressBar1.Height = 3
         End If
+    End Sub
+
+    Private Sub SupportToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SupportToolStripMenuItem.Click
+        CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("https://spezcomputerhelp.weebly.com/spez-apps.html")
+    End Sub
+
+    Private Sub ShowFavoritesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ShowFavoritesToolStripMenuItem.Click
+        Library.Show()
+        Library.TabControl1.SelectedIndex = 2
+    End Sub
+
+    Private Sub AddThisWebsiteToFavoritesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddThisWebsiteToFavoritesToolStripMenuItem.Click
+        My.Settings.Favorites.Add(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString)
+        My.Settings.Save()
     End Sub
 End Class

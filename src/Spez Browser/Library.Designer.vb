@@ -27,15 +27,19 @@ Partial Class Library
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.ListBox2 = New System.Windows.Forms.ListBox()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.ListBox3 = New System.Windows.Forms.ListBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -45,6 +49,7 @@ Partial Class Library
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Location = New System.Drawing.Point(12, 12)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -55,7 +60,6 @@ Partial Class Library
         '
         Me.TabPage1.Controls.Add(Me.Button3)
         Me.TabPage1.Controls.Add(Me.Button2)
-        Me.TabPage1.Controls.Add(Me.Button1)
         Me.TabPage1.Controls.Add(Me.ListBox1)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
@@ -78,22 +82,12 @@ Partial Class Library
         'Button2
         '
         Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Button2.Location = New System.Drawing.Point(117, 354)
+        Me.Button2.Location = New System.Drawing.Point(6, 354)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(136, 31)
         Me.Button2.TabIndex = 1
         Me.Button2.Text = "Remove From History"
         Me.Button2.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(6, 354)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(105, 31)
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Clear History"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'ListBox1
         '
@@ -150,6 +144,50 @@ Partial Class Library
         Me.ListBox2.Size = New System.Drawing.Size(580, 342)
         Me.ListBox2.TabIndex = 2
         '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.Button1)
+        Me.TabPage3.Controls.Add(Me.ListBox3)
+        Me.TabPage3.Controls.Add(Me.Button6)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(592, 391)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Favorites"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'ListBox3
+        '
+        Me.ListBox3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                    Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ListBox3.FormattingEnabled = True
+        Me.ListBox3.Location = New System.Drawing.Point(6, 6)
+        Me.ListBox3.Name = "ListBox3"
+        Me.ListBox3.Size = New System.Drawing.Size(580, 342)
+        Me.ListBox3.TabIndex = 3
+        '
+        'Button1
+        '
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(418, 354)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(168, 31)
+        Me.Button1.TabIndex = 5
+        Me.Button1.Text = "Go to Website"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button6
+        '
+        Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button6.Location = New System.Drawing.Point(6, 354)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(135, 31)
+        Me.Button6.TabIndex = 6
+        Me.Button6.Text = "Remove From Favorites"
+        Me.Button6.UseVisualStyleBackColor = True
+        '
         'Library
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -163,6 +201,7 @@ Partial Class Library
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -171,9 +210,12 @@ Partial Class Library
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
     Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Button4 As System.Windows.Forms.Button
     Friend WithEvents Button5 As System.Windows.Forms.Button
     Friend WithEvents ListBox2 As System.Windows.Forms.ListBox
     Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents ListBox3 As System.Windows.Forms.ListBox
+    Friend WithEvents Button6 As System.Windows.Forms.Button
 End Class

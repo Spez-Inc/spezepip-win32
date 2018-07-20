@@ -3,12 +3,6 @@ Imports Gecko
 
 Public Class Library
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        My.Settings.History.Clear()
-        ListBox1.Items.Clear()
-        My.Settings.Save()
-    End Sub
-
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
         My.Settings.History.Remove(ListBox1.SelectedItem)
         ListBox1.Items.Remove(ListBox1.SelectedItem)
@@ -34,6 +28,9 @@ Public Class Library
         For Each item In My.Settings.Bookmarks
             ListBox2.Items.Add(item)
         Next
+        For Each item In My.Settings.Favorites
+            ListBox3.Items.Add(item)
+        Next
     End Sub
 
     Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
@@ -49,5 +46,20 @@ Public Class Library
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        CType(Form1.TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(ListBox3.SelectedItem)
+        Try
+            CType(PrivateForm1.TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(ListBox3.SelectedItem)
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
+        My.Settings.Favorites.Remove(ListBox3.SelectedItem)
+        ListBox3.Items.Remove(ListBox3.SelectedItem)
+        My.Settings.Save()
     End Sub
 End Class
