@@ -1,7 +1,7 @@
-# ![Spez Browser Icon](C:\Users\Sarp\Documents\GitHub\spez-browser\icon.png)  Spez Browser
+# ![Spez Browser Icon](icon.png)  Spez Browser
 Spez Browser is a web browser that built with VB.NET. It uses S.B.E. rendering engine, that is based on GeckoFX and XULRunner.
 
-![Spez Browser (Version: Quantum(9.0)) Preview](C:\Users\Sarp\Documents\GitHub\spez-browser\preview.png)
+![Spez Browser (Version: Quantum(9.0)) Preview](preview.png)
 
 ## Features
 
