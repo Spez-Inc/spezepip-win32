@@ -62,4 +62,8 @@ Public Class Library
         ListBox3.Items.Remove(ListBox3.SelectedItem)
         My.Settings.Save()
     End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        MoveTool.ShowDialog()
+    End Sub
 End Class

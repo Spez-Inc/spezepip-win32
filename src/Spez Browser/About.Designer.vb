@@ -57,7 +57,7 @@ Partial Class About
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(403, 23)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Spez Browser"
+        Me.Label1.Text = "Spez Browser Quantum"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label2
@@ -68,7 +68,7 @@ Partial Class About
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(403, 23)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "8.2 (Code Name: Summer)"
+        Me.Label2.Text = "Version 9.0"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label3
@@ -79,7 +79,7 @@ Partial Class About
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(403, 36)
         Me.Label3.TabIndex = 2
-        Me.Label3.Text = "The Web Browser is More Smart," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Simply, Advanced and Faster."
+        Me.Label3.Text = "The ""Quantum"" speed of web browser." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Powered with S.B.E. 2.0"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label4
@@ -113,7 +113,7 @@ Partial Class About
         Me.Label5.Size = New System.Drawing.Size(403, 34)
         Me.Label5.TabIndex = 2
         Me.Label5.Text = "This program comes with ABSOLUTELY NO WARRANTY." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "For more information, visit the " & _
-            "GNU General Public License, Version 2 or later."
+    "GNU General Public License, Version 2 or later."
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LinkLabel1

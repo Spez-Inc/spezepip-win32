@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Net
 Imports Gecko
 Imports Gecko.DOM
+Imports System.Threading
 
 
 Public Class Form1
@@ -81,7 +82,6 @@ Public Class Form1
     End Sub
 
     Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
-
         Dim NewBrowser As New GeckoWebBrowser()
         Dim NewTab As New TabPage
         NewBrowser.Tag = NewTab
@@ -93,28 +93,86 @@ Public Class Form1
         TabControl1.SelectedTab = NewTab
         AddHandler NewBrowser.ProgressChanged, AddressOf LoadingWeb
         AddHandler NewBrowser.DocumentCompleted, AddressOf Done
-        AddHandler Gecko.LauncherDialog.Download, AddressOf LauncherDialog_Download
         NewBrowser.Navigate(My.Settings.Homepage)
+        AddHandler NewBrowser.CreateWindow, AddressOf BrowCreateWindow
     End Sub
     Private Sub LoadingWeb(ByVal sender As Object, ByVal e As GeckoProgressEventArgs)
         ProgressBar1.Show()
         ProgressBar1.Width = 1
         ProgressBar1.Maximum = e.MaximumProgress
         ProgressBar1.Value = e.MaximumProgress
+        If TabControl1.TabPages.Count = 1 Then
+            TabControl1.ItemSize = New Size(0, 1)
+            TabControl1.SizeMode = TabSizeMode.Fixed
+        ElseIf TabControl1.TabPages.Count < 15 Then
+            TabControl1.ItemSize = New Size(TabControl1.Width / TabControl1.TabPages.Count - 1.5, 0)
+            TabControl1.SizeMode = TabSizeMode.Fixed
+        Else
+            TabControl1.ItemSize = New Size(128, 0)
+            TabControl1.SizeMode = TabSizeMode.Fixed
+        End If
     End Sub
     Private Sub Done()
+        Link.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
+        TextBox1.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
         ProgressBar1.Hide()
         ProgressBar1.Value = 0
         ProgressBar1.Width = 0
         Me.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).DocumentTitle & " - Spez Browser"
         DocTitle.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).DocumentTitle
-        Link.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
-        TabControl1.SelectedTab.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).DocumentTitle
-        TextBox1.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
         My.Settings.History.Add(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString)
         Library.ListBox1.Items.Add(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString)
         My.Settings.Save()
         webIcons()
+        TabControl1.SelectedTab.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).DocumentTitle
+        If (CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).CanGoBack = False) Then
+            If My.Settings.Theme = "Windows Style" Then
+                Button1.Enabled = False
+            Else
+                Button1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\backdis.png"))
+            End If
+        Else
+            If My.Settings.Theme = "Windows Style" Then
+                Button1.Enabled = True
+            Else
+                Button1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\back.png"))
+            End If
+        End If
+        If (CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).CanGoForward = False) Then
+            If My.Settings.Theme = "Windows Style" Then
+                Button2.Enabled = False
+            Else
+                Button2.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\nextdis.png"))
+            End If
+        Else
+            If My.Settings.Theme = "Windows Style" Then
+                Button2.Enabled = True
+            Else
+                Button2.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\next.png"))
+            End If
+        End If
+        If TextBox1.Text.Contains("about:") Then
+            Link.ForeColor = Color.DodgerBlue
+            Link.Text = "🌐  " & Link.Text
+        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Then
+            Link.ForeColor = Color.DodgerBlue
+            Link.Text = "🌐  Spez Browser Page"
+            TextBox1.Text = Nothing
+        ElseIf TextBox1.Text.Contains("https://") Then
+            Link.ForeColor = Color.Green
+            Link.Text = "🔒 " & Link.Text
+        Else
+            Link.ForeColor = Color.Gray
+        End If
+        UpdateAutoComplete()
+    End Sub
+
+    Private Sub UpdateAutoComplete()
+
+        'Loop through each listbox item and add it to the Autocomplete source
+        For i As Integer = 0 To Library.ListBox1.Items.Count - 1
+            TextBox1.AutoCompleteCustomSource.Add(Library.ListBox1.Items(i))
+        Next
     End Sub
 
     Private Sub webIcons()
@@ -259,8 +317,14 @@ Public Class Form1
         End If
         '-----------------------------------------------------------
         If My.Settings.WelcomeScreen = True Then
-            Me.Hide()
-            WelcomeScreen.ShowDialog()
+            If Thread.CurrentThread.CurrentUICulture.Name.ToString.Contains("tr") Then
+                My.Settings.Lang = "Türkçe"
+            ElseIf Thread.CurrentThread.CurrentUICulture.Name.ToString.Contains("de") Then
+                My.Settings.Lang = "Deutsch"
+            Else
+                My.Settings.Lang = "English"
+            End If
+            My.Settings.Homepage = ("file:///" & Application.StartupPath & "/data/htmldoc/new-tab.html")
         End If
         '-----------------------------------------------------------
         If My.Settings.Lang = "Türkçe" Then
@@ -294,6 +358,7 @@ Public Class Form1
             Library.Button5.Text = "Yer imlerinden Sil"
             Library.Button1.Text = "Web Sayfasına Git"
             Library.Button6.Text = "Favorilerden Sil"
+            Library.Button7.Text = "İçe Aktar..."
             Library.Text = "Kitaplık"
             HTMLEdit.Text = "HTML Editör"
             HTMLEdit.FileToolStripMenuItem.Text = "Dosya"
@@ -312,6 +377,7 @@ Public Class Form1
             Dialog1.Button2.Text = "Varsayılanı Uygula"
             Dialog1.OK_Button.Text = "Uygula"
             Dialog1.Cancel_Button.Text = "İptal"
+            GeckoPreferences.User("intl.accept_languages") = "tr"
         End If
         If My.Settings.Lang = "English" Then
             DocTitle.Text = "Document Title Appears Here."
@@ -344,6 +410,7 @@ Public Class Form1
             Library.Button5.Text = "Remove From Bookmarks"
             Library.Button1.Text = "Go to Website"
             Library.Button6.Text = "Remove From Favorites"
+            Library.Button7.Text = "Import..."
             Library.Text = "Library"
             HTMLEdit.Text = "HTML Editor"
             HTMLEdit.FileToolStripMenuItem.Text = "File"
@@ -362,6 +429,59 @@ Public Class Form1
             Dialog1.Button2.Text = "Use Deafult"
             Dialog1.OK_Button.Text = "Apply"
             Dialog1.Cancel_Button.Text = "Cancel"
+            GeckoPreferences.User("intl.accept_languages") = "en-us"
+        End If
+        If My.Settings.Lang = "Deutsch" Then
+            DocTitle.Text = "Der Dokumentkopf erscheint hier."
+            Link.Text = "Link/URL hier sichtbar."
+            NewTabToolStripMenuItem1.Text = "Neuer Tab"
+            NewWindowToolStripMenuItem.Text = "Neues Fenster"
+            NewPrivateBrowsingWindowToolStripMenuItem.Text = "Neues Inkognito-Navigationsfenster"
+            PrintToolStripMenuItem.Text = "Drucken"
+            PrintPreviewToolStripMenuItem.Text = "Druckvorschau"
+            ExitPrintPreviewToolStripMenuItem.Text = "Beenden Sie die Druckvorschau"
+            SavePageToolStripMenuItem.Text = "Seite speichern"
+            HTMLEditorToolStripMenuItem.Text = "HTML Editor"
+            HistoryToolStripMenuItem.Text = "Geschichte"
+            BookmarksToolStripMenuItem.Text = "Lesezeichen"
+            AddThisWebsiteToBookmarksToolStripMenuItem.Text = "Lesezeichen dieser Website"
+            ShowBookmarksToolStripMenuItem.Text = "Lesezeichen anzeigen"
+            FavoritesToolStripMenuItem.Text = "Favoriten"
+            AddThisWebsiteToFavoritesToolStripMenuItem.Text = "Fügen Sie diese Website Ihren Favoriten hinzu"
+            ShowFavoritesToolStripMenuItem.Text = "Favoriten anzeigen"
+            SettingsStripMenuItem1.Text = "Voreinstellungen"
+            SupportToolStripMenuItem.Text = "Unterstützung"
+            AboutSpezBrowserToolStripMenuItem.Text = "Über Spez Browser"
+            ExitToolStripMenuItem.Text = "Ausfahrt"
+            Library.TabPage1.Text = "Geschichte"
+            Library.TabPage2.Text = "Lesezeichen"
+            Library.TabPage3.Text = "Favoriten"
+            Library.Button2.Text = "Aus dem Verlauf löschen"
+            Library.Button3.Text = "Gehe zur Webseite"
+            Library.Button4.Text = "Gehe zur Webseite"
+            Library.Button5.Text = "Löschen von Lesezeichen"
+            Library.Button1.Text = "Gehe zur Webseite"
+            Library.Button6.Text = "Aus den Favoriten löschen"
+            Library.Button7.Text = "Einführen..."
+            Library.Text = "Bibliothek"
+            HTMLEdit.Text = "HTML Editor"
+            HTMLEdit.FileToolStripMenuItem.Text = "Datei"
+            HTMLEdit.SaveToolStripMenuItem.Text = "Speichern"
+            HTMLEdit.OpenToolStripMenuItem.Text = "Hungrig"
+            HTMLEdit.ExitToolStripMenuItem.Text = "Ausfahrt"
+            HTMLEdit.EditToolStripMenuItem.Text = "Layout"
+            HTMLEdit.UndoToolStripMenuItem.Text = "Rückgängig machen"
+            HTMLEdit.RedoToolStripMenuItem.Text = "Weiterleiten"
+            HTMLEdit.PreviewToolStripMenuItem.Text = "Vorschau (CTRL + T)"
+            Dialog1.Text = "Voreinstellungen"
+            Dialog1.GroupBox1.Text = "Sprache"
+            Dialog1.Label1.Text = "(Übersetzt ist nicht 100%.)"
+            Dialog1.GroupBox2.Text = "Startseite"
+            Dialog1.Button1.Text = "Übernehmen Current"
+            Dialog1.Button2.Text = "Übernehmen Standard"
+            Dialog1.OK_Button.Text = "Anwenden"
+            Dialog1.Cancel_Button.Text = "Stornierung"
+            GeckoPreferences.User("intl.accept_languages") = "de"
         End If
         '-----------------------------------------------------------
         Dialog1.ComboBox1.Text = My.Settings.Lang
@@ -402,46 +522,51 @@ Public Class Form1
         AddHandler NewBrowser.ProgressChanged, AddressOf LoadingWeb
         AddHandler NewBrowser.DocumentCompleted, AddressOf Done
         AddHandler Gecko.LauncherDialog.Download, AddressOf LauncherDialog_Download
-    End Sub
-    Private Sub LauncherDialog_Download(ByVal sender As Object, ByVal e As LauncherDialogEvent)
-        Dim objTarget As Gecko.nsILocalFile = Gecko.Xpcom.CreateInstance(Of Gecko.nsILocalFile)("@mozilla.org/file/local;1")
-        Dim tmp_Loc As String = Application.StartupPath & "\data"
-        Dim sx As Object = Nothing
-        Dim fx As String = ""
-        Dim saveBox As New SaveFileDialog
-        Dim win As Object = Gecko.Xpcom.GetService(Of Gecko.nsIWindowWatcher)("@mozilla.org/embedcomp/window-watcher;1")
+        AddHandler NewBrowser.CreateWindow, AddressOf BrowCreateWindow
+        '-----------------------------------------------------------
+        If My.Settings.WelcomeScreen = True Then
+            My.Settings.WelcomeScreen = False
+            CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/welcome.html")
+        End If
 
-        Using tmp As New Gecko.nsAString(tmp_Loc)
+    End Sub
+
+    Private Sub LauncherDialog_Download(ByVal sender As Object, ByVal e As Gecko.LauncherDialogEvent)
+        Dim objTarget As nsILocalFile = Xpcom.CreateInstance(Of nsILocalFile)("@mozilla.org/file/local;1")
+
+        Using tmp As nsAString = New nsAString(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & vbTab & "emp.tmp")
             objTarget.InitWithPath(tmp)
         End Using
 
-        If e.Filename.Contains(".") Then
-            sx = Strings.Split(e.Filename, ".")
-            fx = sx(sx.Length - 1).ToUpper & " File (*." & sx(sx.Length - 1) & ")|*." & sx(sx.Length - 1)
-        Else
-            fx = "File (*.*)|*.*"
-        End If
+        Dim myStream As Stream
+        Dim saveFileDialog1 As SaveFileDialog = New SaveFileDialog()
+        saveFileDialog1.Filter = "All files (*.*)|*.*"
+        saveFileDialog1.Title = "Download Location:"
+        saveFileDialog1.FilterIndex = 2
+        saveFileDialog1.RestoreDirectory = True
+        saveFileDialog1.FileName = e.Filename
 
-        saveBox.Filter = fx '"HTML File (*.html)|*.html"
-        saveBox.Title = "Download Location:"
-        saveBox.FileName = e.Filename
-        If saveBox.ShowDialog <> System.Windows.Forms.DialogResult.OK And String.IsNullOrEmpty(saveBox.FileName) Then
-            Exit Sub
-        End If
-        Dim source As Gecko.nsIURI = Gecko.IOService.CreateNsIUri(New Uri(e.Url).AbsoluteUri)
-        Dim dest As Gecko.nsIURI = Gecko.IOService.CreateNsIUri(New Uri(saveBox.FileName).AbsoluteUri)
-        Dim t As Gecko.nsAStringBase = DirectCast(New Gecko.nsAString(System.IO.Path.GetFileName(saveBox.FileName)), Gecko.nsAStringBase)
+        If saveFileDialog1.ShowDialog() = DialogResult.OK Then
 
-        Dim persist As Gecko.nsIWebBrowserPersist = Gecko.Xpcom.CreateInstance(Of Gecko.nsIWebBrowserPersist)("@mozilla.org/embedding/browser/nsWebBrowserPersist;1")
-        Dim DownloadMan As Gecko.nsIDownloadManager = Gecko.Xpcom.CreateInstance(Of Gecko.nsIDownloadManager)("@mozilla.org/download-manager;1")
-        Dim downloadX As Gecko.nsIDownload = DownloadMan.AddDownload(0, source, dest, t, e.Mime, 0, Nothing, DirectCast(persist, Gecko.nsICancelable), False)
+            If (CSharpImpl.__Assign(myStream, saveFileDialog1.OpenFile())) IsNot Nothing Then
+                Dim source As nsIURI = IOService.CreateNsIUri(e.Url)
+                Dim dest As nsIURI = IOService.CreateNsIUri(New Uri(saveFileDialog1.FileName).AbsoluteUri)
+                Dim t As nsAStringBase = CType(New nsAString(System.IO.Path.GetFileName(saveFileDialog1.FileName)), nsAStringBase)
+                Dim persist As nsIWebBrowserPersist = Xpcom.CreateInstance(Of nsIWebBrowserPersist)("@mozilla.org/embedding/browser/nsWebBrowserPersist;1")
+                Dim nst As nsITransfer = Xpcom.CreateInstance(Of nsITransfer)("@mozilla.org/transfer;1")
+                nst.Init(source, dest, t, e.Mime, 0, Nothing, persist, False)
 
-        If (downloadX IsNot Nothing) Then
-            persist.SetPersistFlagsAttribute(2 Or 32 Or 16384)
-            persist.SetProgressListenerAttribute(DirectCast(downloadX, Gecko.nsIWebProgressListener))
-            persist.SaveURI(source, Nothing, Nothing, Nothing, Nothing, DirectCast(dest, Gecko.nsISupports), Nothing)
+                If nst IsNot Nothing Then
+                    persist.SetPersistFlagsAttribute(2 Or 32 Or 16384)
+                    persist.SetProgressListenerAttribute(CType(nst, nsIWebProgressListener))
+                    persist.SaveURI(source, Nothing, Nothing, CUInt(Gecko.nsIHttpChannelConsts.REFERRER_POLICY_NO_REFERRER), Nothing, Nothing, CType(dest, nsISupports), Nothing)
+                End If
+
+                myStream.Close()
+            End If
         End If
     End Sub
+
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).GoBack()
     End Sub
@@ -546,7 +671,26 @@ Public Class Form1
 
     Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
         If e.KeyCode = Keys.Enter Then
-            CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(TextBox1.Text)
+            If TextBox1.Text = "about:spezbrowabout" Then
+                About.ShowDialog()
+            ElseIf TextBox1.Text = "about:preferences" Then
+                Dialog1.ShowDialog()
+            ElseIf TextBox1.Text = "about:preferences=general" Then
+                Dialog1.ShowDialog()
+                Dialog1.TabControl1.TabIndex = 0
+            ElseIf TextBox1.Text = "about:preferences=themes" Then
+                Dialog1.ShowDialog()
+                Dialog1.TabControl1.TabIndex = 1
+            ElseIf TextBox1.Text = "about:preferences=clean" Then
+                Dialog1.ShowDialog()
+                Dialog1.TabControl1.TabIndex = 2
+            ElseIf TextBox1.Text = "about:newtab" Then
+                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/new-tab.html")
+            ElseIf TextBox1.Text = "about:welcome" Then
+                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/welcome.html")
+            Else
+                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(TextBox1.Text)
+            End If
         End If
     End Sub
 
@@ -676,6 +820,20 @@ Public Class Form1
 
     Private Sub CloseTabToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseTabToolStripMenuItem.Click
         TabControl1.TabPages.Remove(TabControl1.SelectedTab)
+        Try
+            If TabControl1.TabPages.Count = 1 Then
+                TabControl1.ItemSize = New Size(0, 1)
+                TabControl1.SizeMode = TabSizeMode.Fixed
+            ElseIf TabControl1.TabPages.Count < 15 Then
+                TabControl1.ItemSize = New Size(TabControl1.Width / TabControl1.TabPages.Count - 1.5, 0)
+                TabControl1.SizeMode = TabSizeMode.Fixed
+            Else
+                TabControl1.ItemSize = New Size(128, 0)
+                TabControl1.SizeMode = TabSizeMode.Fixed
+            End If
+        Catch ex As Exception
+
+        End Try
         If TabControl1.TabCount = 0 Then
             End
         End If
@@ -693,9 +851,12 @@ Public Class Form1
     End Sub
 
     Private Sub NewWindowToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewWindowToolStripMenuItem.Click
-        Dialog1.ListView1.Items.Clear()
-        Dim newwin As New Form1
-        newwin.Show()
+        Dim pHelp As New ProcessStartInfo
+        pHelp.FileName = Application.ExecutablePath
+        pHelp.Arguments = Nothing
+        pHelp.UseShellExecute = True
+        pHelp.WindowStyle = ProcessWindowStyle.Normal
+        Dim proc As Process = Process.Start(pHelp)
     End Sub
 
     Private Sub Panel1_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Panel1.DoubleClick
@@ -703,8 +864,12 @@ Public Class Form1
     End Sub
 
     Private Sub NewPrivateBrowsingWindowToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewPrivateBrowsingWindowToolStripMenuItem.Click
-        Dim newwin As New PrivateForm1
-        newwin.Show()
+        Dim pHelp As New ProcessStartInfo
+        pHelp.FileName = Application.ExecutablePath
+        pHelp.Arguments = "--priv"
+        pHelp.UseShellExecute = True
+        pHelp.WindowStyle = ProcessWindowStyle.Normal
+        Dim proc As Process = Process.Start(pHelp)
     End Sub
 
     Private Sub ExitPrintPreviewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitPrintPreviewToolStripMenuItem.Click
@@ -820,4 +985,103 @@ Public Class Form1
         My.Settings.Favorites.Add(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString)
         My.Settings.Save()
     End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        Dim args As String() = Environment.GetCommandLineArgs()
+        If args.Contains("--priv") Then
+            Me.Visible = False
+            PrivateForm1.Show()
+        Else
+            Me.Visible = True
+        End If
+    End Sub
+
+    Private Sub Form1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
+        Try
+            If TabControl1.TabPages.Count = 1 Then
+                TabControl1.ItemSize = New Size(0, 1)
+                TabControl1.SizeMode = TabSizeMode.Fixed
+            ElseIf TabControl1.TabPages.Count < 15 Then
+                TabControl1.ItemSize = New Size(TabControl1.Width / TabControl1.TabPages.Count - 1.5, 0)
+                TabControl1.SizeMode = TabSizeMode.Fixed
+            Else
+                TabControl1.ItemSize = New Size(128, 0)
+                TabControl1.SizeMode = TabSizeMode.Fixed
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
+        DocTitle.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).DocumentTitle
+        Link.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
+        TextBox1.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
+        webIcons()
+        If TextBox1.Text.Contains("about:") Then
+            Link.ForeColor = Color.DodgerBlue
+            Link.Text = "🌐  " & Link.Text
+        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Then
+            Link.ForeColor = Color.DodgerBlue
+            Link.Text = "🌐  Spez Browser Page"
+            TextBox1.Text = Nothing
+        ElseIf TextBox1.Text.Contains("https://") Then
+            Link.ForeColor = Color.Green
+            Link.Text = "🔒 " & Link.Text
+        Else
+            Link.ForeColor = Color.Gray
+        End If
+        TabControl1.SelectedTab.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).DocumentTitle
+        If (CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).CanGoBack = False) Then
+            If My.Settings.Theme = "Windows Style" Then
+                Button1.Enabled = False
+            Else
+                Button1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\backdis.png"))
+            End If
+        Else
+            If My.Settings.Theme = "Windows Style" Then
+                Button1.Enabled = True
+            Else
+                Button1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\back.png"))
+            End If
+        End If
+        If (CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).CanGoForward = False) Then
+            If My.Settings.Theme = "Windows Style" Then
+                Button2.Enabled = False
+            Else
+                Button2.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\nextdis.png"))
+            End If
+        Else
+            If My.Settings.Theme = "Windows Style" Then
+                Button2.Enabled = True
+            Else
+                Button2.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\next.png"))
+            End If
+        End If
+    End Sub
+
+    Private Sub BrowCreateWindow(ByVal sender As Object, ByVal e As GeckoCreateWindowEventArgs)
+        e.Cancel = True
+        Dim NewBrowser As New GeckoWebBrowser()
+        Dim NewTab As New TabPage
+        NewBrowser.Tag = NewTab
+        NewTab.Tag = NewBrowser
+        TabControl1.TabPages.Add(NewTab)
+        NewTab.Controls.Add(NewBrowser)
+        NewBrowser.Dock = DockStyle.Fill
+        'NewBrowser.Navigate(Application.StartupPath & "/data/New Tab - Home.html")
+        TabControl1.SelectedTab = NewTab
+        AddHandler NewBrowser.ProgressChanged, AddressOf LoadingWeb
+        AddHandler NewBrowser.DocumentCompleted, AddressOf Done
+        NewBrowser.Navigate(e.Uri)
+        AddHandler NewBrowser.CreateWindow, AddressOf BrowCreateWindow
+    End Sub
+End Class
+
+Public Class CSharpImpl
+    <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
+    Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
+        target = value
+        Return value
+    End Function
 End Class

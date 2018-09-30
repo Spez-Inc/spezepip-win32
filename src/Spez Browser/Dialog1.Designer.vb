@@ -161,7 +161,7 @@ Partial Class Dialog1
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"English", "Türkçe"})
+        Me.ComboBox1.Items.AddRange(New Object() {"English", "Türkçe", "Deutsch"})
         Me.ComboBox1.Location = New System.Drawing.Point(6, 19)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(309, 21)

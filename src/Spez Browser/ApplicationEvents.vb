@@ -11,11 +11,6 @@ Namespace My
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
         Protected Overrides Function OnStartup(ByVal eventArgs As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) As Boolean
-            Dim ProfileDirectory As String = My.Application.Info.DirectoryPath & "\Firefox\Profile"
-            If Not Directory.Exists(ProfileDirectory) Then
-                Directory.CreateDirectory(ProfileDirectory)
-            End If
-            Xpcom.ProfileDirectory = ProfileDirectory
             Gecko.Xpcom.Initialize("data/engine/")
             Return True
         End Function

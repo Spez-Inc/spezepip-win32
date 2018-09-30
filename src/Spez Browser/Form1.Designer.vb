@@ -31,9 +31,6 @@ Partial Class Form1
         Me.Button6 = New System.Windows.Forms.Button()
         Me.SettingsStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Link = New System.Windows.Forms.Label()
-        Me.DocTitle = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
@@ -62,6 +59,9 @@ Partial Class Form1
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Button8 = New System.Windows.Forms.Button()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Link = New System.Windows.Forms.Label()
+        Me.DocTitle = New System.Windows.Forms.Label()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.LeftR = New System.Windows.Forms.Panel()
@@ -77,9 +77,9 @@ Partial Class Form1
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
-        Me.Panel2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.TabRightClick.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -133,16 +133,18 @@ Partial Class Form1
         '
         'TextBox1
         '
-        Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(291, 16)
+        Me.TextBox1.Location = New System.Drawing.Point(257, 16)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(449, 29)
+        Me.TextBox1.Size = New System.Drawing.Size(424, 29)
         Me.TextBox1.TabIndex = 1
         '
         'Button6
         '
+        Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button6.BackgroundImage = Global.Spez_Browser.My.Resources.Resources.new_tab
         Me.Button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button6.FlatAppearance.BorderSize = 0
@@ -150,7 +152,7 @@ Partial Class Form1
         Me.Button6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Location = New System.Drawing.Point(252, 14)
+        Me.Button6.Location = New System.Drawing.Point(708, 14)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(30, 30)
         Me.Button6.TabIndex = 0
@@ -166,10 +168,8 @@ Partial Class Form1
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.Transparent
-        Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.Button3)
         Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Controls.Add(Me.TextBox1)
         Me.Panel1.Controls.Add(Me.Button7)
         Me.Panel1.Controls.Add(Me.Button4)
         Me.Panel1.Controls.Add(Me.Button1)
@@ -177,45 +177,13 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.Button5)
         Me.Panel1.Controls.Add(Me.Button6)
         Me.Panel1.Controls.Add(Me.Button8)
+        Me.Panel1.Controls.Add(Me.Panel2)
+        Me.Panel1.Controls.Add(Me.TextBox1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(2, 2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(796, 60)
         Me.Panel1.TabIndex = 4
-        '
-        'Panel2
-        '
-        Me.Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel2.Controls.Add(Me.Link)
-        Me.Panel2.Controls.Add(Me.DocTitle)
-        Me.Panel2.Location = New System.Drawing.Point(291, 16)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(449, 29)
-        Me.Panel2.TabIndex = 3
-        '
-        'Link
-        '
-        Me.Link.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Link.Font = New System.Drawing.Font("Calibri", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
-        Me.Link.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Link.Location = New System.Drawing.Point(0, 15)
-        Me.Link.Name = "Link"
-        Me.Link.Size = New System.Drawing.Size(449, 14)
-        Me.Link.TabIndex = 1
-        Me.Link.Text = "Link/URL Appears Here."
-        Me.Link.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'DocTitle
-        '
-        Me.DocTitle.Dock = System.Windows.Forms.DockStyle.Top
-        Me.DocTitle.Font = New System.Drawing.Font("Calibri", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
-        Me.DocTitle.Location = New System.Drawing.Point(0, 0)
-        Me.DocTitle.Name = "DocTitle"
-        Me.DocTitle.Size = New System.Drawing.Size(449, 15)
-        Me.DocTitle.TabIndex = 0
-        Me.DocTitle.Text = "Document Title Appears Here."
-        Me.DocTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PictureBox1
         '
@@ -265,6 +233,7 @@ Partial Class Form1
         Me.Button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button5.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Button5.FlatAppearance.BorderSize = 0
+        Me.Button5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent
         Me.Button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -299,7 +268,7 @@ Partial Class Form1
         '
         Me.NewPrivateBrowsingWindowToolStripMenuItem.Name = "NewPrivateBrowsingWindowToolStripMenuItem"
         Me.NewPrivateBrowsingWindowToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Alt) _
-                    Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+            Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
         Me.NewPrivateBrowsingWindowToolStripMenuItem.Size = New System.Drawing.Size(302, 22)
         Me.NewPrivateBrowsingWindowToolStripMenuItem.Text = "New Private Browsing Window"
         '
@@ -340,7 +309,7 @@ Partial Class Form1
         '
         Me.HTMLEditorToolStripMenuItem.Name = "HTMLEditorToolStripMenuItem"
         Me.HTMLEditorToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
-                    Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
+            Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
         Me.HTMLEditorToolStripMenuItem.Size = New System.Drawing.Size(302, 22)
         Me.HTMLEditorToolStripMenuItem.Text = "HTML Editor"
         '
@@ -443,6 +412,39 @@ Partial Class Form1
         Me.Button8.TabIndex = 0
         Me.ToolTip1.SetToolTip(Me.Button8, "Minimize")
         Me.Button8.UseVisualStyleBackColor = True
+        '
+        'Panel2
+        '
+        Me.Panel2.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.Panel2.Controls.Add(Me.Link)
+        Me.Panel2.Controls.Add(Me.DocTitle)
+        Me.Panel2.Location = New System.Drawing.Point(257, 16)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(424, 29)
+        Me.Panel2.TabIndex = 3
+        '
+        'Link
+        '
+        Me.Link.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Link.Font = New System.Drawing.Font("Calibri", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.Link.ForeColor = System.Drawing.Color.Gray
+        Me.Link.Location = New System.Drawing.Point(0, 15)
+        Me.Link.Name = "Link"
+        Me.Link.Size = New System.Drawing.Size(424, 14)
+        Me.Link.TabIndex = 1
+        Me.Link.Text = "Link/URL Appears Here."
+        Me.Link.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'DocTitle
+        '
+        Me.DocTitle.Dock = System.Windows.Forms.DockStyle.Top
+        Me.DocTitle.Font = New System.Drawing.Font("Calibri", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.DocTitle.Location = New System.Drawing.Point(0, 0)
+        Me.DocTitle.Name = "DocTitle"
+        Me.DocTitle.Size = New System.Drawing.Size(424, 15)
+        Me.DocTitle.TabIndex = 0
+        Me.DocTitle.Text = "Document Title Appears Here."
+        Me.DocTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'WebBrowser1
         '
@@ -572,9 +574,9 @@ Partial Class Form1
         Me.Text = "Spez Browser"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        Me.Panel2.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
         Me.TabRightClick.ResumeLayout(False)
         Me.ResumeLayout(False)
 

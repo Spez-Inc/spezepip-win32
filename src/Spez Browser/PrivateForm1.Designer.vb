@@ -132,16 +132,16 @@ Partial Class PrivateForm1
         '
         'TextBox1
         '
-        Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(291, 16)
+        Me.TextBox1.Location = New System.Drawing.Point(257, 16)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(449, 29)
+        Me.TextBox1.Size = New System.Drawing.Size(424, 29)
         Me.TextBox1.TabIndex = 1
         '
         'Button6
         '
+        Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button6.BackgroundImage = Global.Spez_Browser.My.Resources.Resources.new_tab
         Me.Button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button6.FlatAppearance.BorderSize = 0
@@ -149,7 +149,7 @@ Partial Class PrivateForm1
         Me.Button6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Location = New System.Drawing.Point(252, 14)
+        Me.Button6.Location = New System.Drawing.Point(708, 14)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(30, 30)
         Me.Button6.TabIndex = 0
@@ -185,23 +185,22 @@ Partial Class PrivateForm1
         '
         'Panel2
         '
-        Me.Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel2.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.Panel2.Controls.Add(Me.Link)
         Me.Panel2.Controls.Add(Me.DocTitle)
-        Me.Panel2.Location = New System.Drawing.Point(291, 16)
+        Me.Panel2.Location = New System.Drawing.Point(257, 16)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(449, 29)
+        Me.Panel2.Size = New System.Drawing.Size(424, 29)
         Me.Panel2.TabIndex = 3
         '
         'Link
         '
         Me.Link.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Link.Font = New System.Drawing.Font("Calibri", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
-        Me.Link.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Link.ForeColor = System.Drawing.Color.Gray
         Me.Link.Location = New System.Drawing.Point(0, 15)
         Me.Link.Name = "Link"
-        Me.Link.Size = New System.Drawing.Size(449, 14)
+        Me.Link.Size = New System.Drawing.Size(424, 14)
         Me.Link.TabIndex = 1
         Me.Link.Text = "Link/URL Appears Here."
         Me.Link.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -212,7 +211,7 @@ Partial Class PrivateForm1
         Me.DocTitle.Font = New System.Drawing.Font("Calibri", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
         Me.DocTitle.Location = New System.Drawing.Point(0, 0)
         Me.DocTitle.Name = "DocTitle"
-        Me.DocTitle.Size = New System.Drawing.Size(449, 15)
+        Me.DocTitle.Size = New System.Drawing.Size(424, 15)
         Me.DocTitle.TabIndex = 0
         Me.DocTitle.Text = "Document Title Appears Here."
         Me.DocTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -299,7 +298,7 @@ Partial Class PrivateForm1
         '
         Me.NewPrivateBrowsingWindowToolStripMenuItem.Name = "NewPrivateBrowsingWindowToolStripMenuItem"
         Me.NewPrivateBrowsingWindowToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Alt) _
-                    Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+            Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
         Me.NewPrivateBrowsingWindowToolStripMenuItem.Size = New System.Drawing.Size(302, 22)
         Me.NewPrivateBrowsingWindowToolStripMenuItem.Text = "New Private Browsing Window"
         '
@@ -340,7 +339,7 @@ Partial Class PrivateForm1
         '
         Me.HTMLEditorToolStripMenuItem.Name = "HTMLEditorToolStripMenuItem"
         Me.HTMLEditorToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
-                    Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
+            Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
         Me.HTMLEditorToolStripMenuItem.Size = New System.Drawing.Size(302, 22)
         Me.HTMLEditorToolStripMenuItem.Text = "HTML Editor"
         '

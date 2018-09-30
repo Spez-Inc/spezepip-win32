@@ -1,0 +1,121 @@
+<head>
+	<title>Welcome</title>
+	<!-- <link href="https://fonts.googleapis.com/css?family=Chivo:300,300i,400,400i,700,700i,900,900" rel="stylesheet"> -->
+</head>
+
+<script>
+	function skip() {
+		var str=location.href.substring(0,location.href.lastIndexOf('/')+1);
+		str=str+"new-tab.html";
+		var replaced=str.replace(" ","+");
+		window.location.assign(replaced);
+	}
+</script>
+
+<style>
+	html {
+		font-family: 'Karla', sans-serif;
+		animation: fadein 1s;
+		color: #16a085;
+		margin: 15px;
+	}
+	
+	@keyframes fadein {
+		from { opacity: 0; }
+		to   { opacity: 1; }
+	}
+	
+	div {
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		min-height: 100vh;
+		padding: 40px 48px;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	#spani {
+		border-radius: 5px;
+		border: hidden;
+		background-color: white;
+		color: #16a085;
+		font-weight: 700;
+		font-family: 'Karla', sans-serif;
+		transition-duration: 0.4s;
+		fill: currentColor;
+		box-shadow: 0px 0px 50px -17px rgba(0,0,0,1);
+		padding: 25px;
+		padding-top: 0px;
+		margin: 25px;
+		width: 332;
+		height: 160;
+	}
+	
+	#spanibutton {
+		border-radius: 5px;
+		border: 5px solid #16a085;
+		background-color: transparent;
+		padding: 10px;
+		color: #16a085;
+		font-weight: 700;
+		font-family: 'Karla', sans-serif;
+		transition-duration: 0.4s;
+		fill: currentColor;
+	}
+	
+	#spanibutton:hover {
+		background-color: #16a085;
+		color: white;
+		transition-duration: 0.4s;
+		fill: currentColor;
+	}
+	
+	#spanibutton:active {
+		background-color: #0f705d;
+		color: white;
+		border: 5px solid #0f705d;
+		transition-duration: 0.4s;
+		fill: currentColor;
+	}
+	
+	a {
+		color: #16a085;
+		text-decoration: none;
+		position: fixed;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+</style>
+
+<body>
+	<a href="new-tab.html">Skip Tour</a>
+	
+	<div>
+		<h1>Welcome to Spez Browser!</h1>
+		<p>Choose a option to discover your new browser.</p>
+
+			<span id="spani">
+				<h1>Introducion</h1>
+				<p>Learn the what the web browser is...</p>
+				<button id="spanibutton">More Info...</button>
+			</span>
+		
+			<span id="spani">
+				<h1>Features</h1>
+				<p>Check out cool features on Spez Browser.</p>
+				<button id="spanibutton">More Info...</button>
+			</span>
+		
+			<span id="spani">
+				<h1>Getting started</h1>
+				<p>The basics of Spez Browser.</p>
+				<button id="spanibutton">More Info...</button>
+			</span>
+	
+		<h3>You are ready for browsing?</h3>
+		<button type="link" id="spanibutton" onclick="skip();">Start Now!</button>
+	</div>
+</body>

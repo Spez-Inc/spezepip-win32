@@ -131,7 +131,12 @@ Public Class About
             If drag Then
                 Me.Top = System.Windows.Forms.Cursor.Position.Y - mousey
                 Me.Left = System.Windows.Forms.Cursor.Position.X - mousex
-                Form1.Location = New Point(Me.Location.X + Me.Width \ 2 - Form1.Width \ 2, Me.Location.Y + Me.Height \ 2 - Form1.Height \ 2)
+                Dim args As String() = Environment.GetCommandLineArgs()
+                If args.Contains("--priv") Then
+                    PrivateForm1.Location = New Point(Me.Location.X + Me.Width \ 2 - Form1.Width \ 2, Me.Location.Y + Me.Height \ 2 - Form1.Height \ 2)
+                Else
+                    Form1.Location = New Point(Me.Location.X + Me.Width \ 2 - Form1.Width \ 2, Me.Location.Y + Me.Height \ 2 - Form1.Height \ 2)
+                End If
             End If
         End If
     End Sub
