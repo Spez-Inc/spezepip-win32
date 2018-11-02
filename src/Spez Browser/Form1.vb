@@ -111,6 +111,27 @@ Public Class Form1
             TabControl1.ItemSize = New Size(128, 0)
             TabControl1.SizeMode = TabSizeMode.Fixed
         End If
+        Try
+            Dim a = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
+            If a.Contains("/data/htmldoc/new-tab.html") Then
+                If My.Settings.ExcludedItems.Contains("Search bar") Then
+                    CType(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Document.GetElementById("hs"), GeckoHtmlElement).Click()
+                End If
+
+                If My.Settings.ExcludedItems.Contains("Weather") Then
+                    CType(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Document.GetElementById("hw"), GeckoHtmlElement).Click()
+                End If
+
+                If My.Settings.ExcludedItems.Contains("Library Shortcurts") Then
+                    CType(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Document.GetElementById("hl"), GeckoHtmlElement).Click()
+                End If
+
+                If My.Settings.ExcludedItems.Contains("News") Then
+                    CType(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Document.GetElementById("hn"), GeckoHtmlElement).Click()
+                End If
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
     Private Sub Done()
         Link.Text = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
@@ -154,7 +175,7 @@ Public Class Form1
         If TextBox1.Text.Contains("about:") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  " & Link.Text
-        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Then
+        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Or TextBox1.Text.Contains("/data/htmldoc/getting.html") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  Spez Browser Page"
             TextBox1.Text = Nothing
@@ -195,16 +216,29 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        If My.Computer.Info.OSFullName.Contains("Windows XP") Then
-            MsgBox("Spez Browser no more supports Windows XP and Vista.", vbCritical, "Sorry for that.")
-            End
-        End If
-        If My.Computer.Info.OSFullName.Contains("Windows Vista") Then
-            MsgBox("Spez Browser no more supports Windows XP and Vista.", vbCritical, "Sorry for that.")
-            End
+        Dim mb As Double
+        Dim b2mb As Double = 1024 * 1024
+        mb = My.Computer.Info.TotalPhysicalMemory / b2mb
+        Dim RamMB As String = String.Format("{0:f1}", mb) - 0.5
+        '-----------------------------------------------------------
+        My.Settings.reseted = False
+
+        Me.WindowState = My.Settings.State
+        Me.Size = My.Settings.Size
+        Me.Location = My.Settings.Position
+        '-----------------------------------------------------------
+        'FileOpenAcoss()
+        'RamMB = 2031
+        If RamMB < 2032 Then
+            If My.Settings.Theme = "Windows Style" Then
+            Else
+                My.Settings.Theme = "Windows Style"
+                My.Settings.Save()
+            End If
         End If
         '-----------------------------------------------------------
-        If My.Settings.Theme = "Windows Style" Then
+        Dim themetype As String = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & My.Settings.Theme & "\theme.txt")
+        If themetype = "THEME_TYPE=WINDOWS" Then
 
             'text
             DocTitle.ForeColor = Color.Black
@@ -241,10 +275,60 @@ Public Class Form1
             Button8.Text = "-"
             Button8.FlatStyle = FlatStyle.Standard
 
-        ElseIf My.Settings.Theme = "Dark" Then
+        ElseIf themetype = "THEME_TYPE=DARK" Then
 
             'text
             DocTitle.ForeColor = Color.White
+
+            'txtbox
+            URLPanel.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\searchbar.png"))
+            Dim clr As New TextBox
+            Dim rs As String
+            Dim gs As String
+            Dim bs As String
+            clr.Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & My.Settings.Theme & "\rgbtextbox.txt")
+            ''findred
+            Dim a As String
+            Dim b As String
+            a = "R="
+            b = InStr(clr.Text, a)
+            If b Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(a) + 3
+                rs = clr.SelectedText.ToString
+                rs = rs.Remove(0, 2)
+            End If
+            ''findgreen
+            Dim c As String
+            Dim d As String
+            c = "G="
+            d = InStr(clr.Text, c)
+            If d Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(c) + 3
+                gs = clr.SelectedText.ToString
+                gs = gs.Remove(0, 2)
+            End If
+            ''findblue
+            Dim ee As String
+            Dim f As String
+            ee = "G="
+            f = InStr(clr.Text, ee)
+            If f Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(ee) + 3
+                bs = clr.SelectedText.ToString
+                bs = bs.Remove(0, 2)
+            End If
+            ''apply
+            Dim r As Integer = Convert.ToInt64(rs)
+            Dim g As Integer = Convert.ToInt64(gs)
+            Dim bb As Integer = Convert.ToInt64(bs)
+            TextBox1.BackColor = System.Drawing.Color.FromArgb(r, g, bb)
+            TextBox1.ForeColor = Color.White
 
             'form
             BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\bg.png"))
@@ -281,6 +365,56 @@ Public Class Form1
         Else
             'text
             DocTitle.ForeColor = Color.Black
+
+            'txtbox
+            URLPanel.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\searchbar.png"))
+            Dim clr As New TextBox
+            Dim rs As String
+            Dim gs As String
+            Dim bs As String
+            clr.Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & My.Settings.Theme & "\rgbtextbox.txt")
+            ''findred
+            Dim a As String
+            Dim b As String
+            a = "R="
+            b = InStr(clr.Text, a)
+            If b Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(a) + 3
+                rs = clr.SelectedText.ToString
+                rs = rs.Remove(0, 2)
+            End If
+            ''findgreen
+            Dim c As String
+            Dim d As String
+            c = "G="
+            d = InStr(clr.Text, c)
+            If d Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(c) + 3
+                gs = clr.SelectedText.ToString
+                gs = gs.Remove(0, 2)
+            End If
+            ''findblue
+            Dim ee As String
+            Dim f As String
+            ee = "B="
+            f = InStr(clr.Text, ee)
+            If f Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(ee) + 3
+                bs = clr.SelectedText.ToString
+                bs = bs.Remove(0, 2)
+            End If
+            ''apply
+            Dim r As Int64 = Convert.ToInt64(rs)
+            Dim g As Int64 = Convert.ToInt64(gs)
+            Dim bb As Int64 = Convert.ToInt64(bs)
+            TextBox1.BackColor = System.Drawing.Color.FromArgb(r, g, bb)
+            TextBox1.ForeColor = Color.Black
 
             'form
             BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\bg.png"))
@@ -377,6 +511,9 @@ Public Class Form1
             Dialog1.Button2.Text = "Varsayılanı Uygula"
             Dialog1.OK_Button.Text = "Uygula"
             Dialog1.Cancel_Button.Text = "İptal"
+            Dialog1.TabControl1.TabPages(0).Text = "Genel"
+            Dialog1.TabControl1.TabPages(1).Text = "Temalar"
+            Dialog1.LinkLabel1.Text = "Daha fazla Spez Browser teması al"
             GeckoPreferences.User("intl.accept_languages") = "tr"
         End If
         If My.Settings.Lang = "English" Then
@@ -429,6 +566,9 @@ Public Class Form1
             Dialog1.Button2.Text = "Use Deafult"
             Dialog1.OK_Button.Text = "Apply"
             Dialog1.Cancel_Button.Text = "Cancel"
+            Dialog1.TabControl1.TabPages(0).Text = "General"
+            Dialog1.TabControl1.TabPages(1).Text = "Themes"
+            Dialog1.LinkLabel1.Text = "Get More Spez Browser Theme"
             GeckoPreferences.User("intl.accept_languages") = "en-us"
         End If
         If My.Settings.Lang = "Deutsch" Then
@@ -481,6 +621,9 @@ Public Class Form1
             Dialog1.Button2.Text = "Übernehmen Standard"
             Dialog1.OK_Button.Text = "Anwenden"
             Dialog1.Cancel_Button.Text = "Stornierung"
+            Dialog1.TabControl1.TabPages(0).Text = "Allgemeines"
+            Dialog1.TabControl1.TabPages(1).Text = "Themen"
+            Dialog1.LinkLabel1.Text = "Holen Sie sich mehr Spez Browser Theme"
             GeckoPreferences.User("intl.accept_languages") = "de"
         End If
         '-----------------------------------------------------------
@@ -503,20 +646,38 @@ Public Class Form1
         TabControl1.Font = New Font(font.Families(0), 9)
         TabRightClick.Font = New Font(font.Families(0), 9)
         ContextMenuStrip1.Font = New Font(font.Families(0), 9)
-        TextBox1.Font = New Font(font.Families(0), 14)
+        TextBox1.Font = New Font(font.Families(0), TextBox1.Font.Size)
         Me.Font = New Font(font.Families(0), 8)
         '-----------------------------------------------------------
-        For Each fileName As String In System.IO.Directory.GetFiles(Application.StartupPath & "\themes")
-            Dim item As New ListViewItem
-            Dim desc As String = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & System.IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt")
-            item.SubItems.Add("Description")
-            item.SubItems(1).Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & System.IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt")
-            item.Text = System.IO.Path.GetFileNameWithoutExtension(fileName)
-            Dialog1.ımageList1.Images.Add(System.IO.Path.GetFileName(fileName), Image.FromFile(Application.StartupPath & "\themes\" & System.IO.Path.GetFileName(fileName)))
-            item.ImageKey = System.IO.Path.GetFileName(fileName)
-            'oReader = New StreamReader(Application.StartupPath & "\themes\" & IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt", True)
-            Dialog1.ListView1.Items.Add(item)
-        Next
+        'RamMB = 2031
+        If RamMB < 2032 Then
+            For Each fileName As String In System.IO.Directory.GetFiles(Application.StartupPath & "\themes")
+                Dim item As New ListViewItem
+                Dim desc As String = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & System.IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt")
+                Dim theme As String = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & System.IO.Path.GetFileNameWithoutExtension(fileName) & "\theme.txt")
+                If theme = "THEME_TYPE=WINDOWS" Then
+                    item.SubItems.Add("Description")
+                    item.SubItems(1).Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & System.IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt")
+                    item.Text = System.IO.Path.GetFileNameWithoutExtension(fileName)
+                    Dialog1.ımageList1.Images.Add(System.IO.Path.GetFileName(fileName), Image.FromFile(Application.StartupPath & "\themes\" & System.IO.Path.GetFileName(fileName)))
+                    item.ImageKey = System.IO.Path.GetFileName(fileName)
+                    'oReader = New StreamReader(Application.StartupPath & "\themes\" & IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt", True)
+                    Dialog1.ListView1.Items.Add(item)
+                End If
+            Next
+        Else
+            For Each fileName As String In System.IO.Directory.GetFiles(Application.StartupPath & "\themes")
+                Dim item As New ListViewItem
+                Dim desc As String = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & System.IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt")
+                item.SubItems.Add("Description")
+                item.SubItems(1).Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & System.IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt")
+                item.Text = System.IO.Path.GetFileNameWithoutExtension(fileName)
+                Dialog1.ımageList1.Images.Add(System.IO.Path.GetFileName(fileName), Image.FromFile(Application.StartupPath & "\themes\" & System.IO.Path.GetFileName(fileName)))
+                item.ImageKey = System.IO.Path.GetFileName(fileName)
+                'oReader = New StreamReader(Application.StartupPath & "\themes\" & IO.Path.GetFileNameWithoutExtension(fileName) & "\desc.txt", True)
+                Dialog1.ListView1.Items.Add(item)
+            Next
+        End If
         Timer3.Start()
         '-----------------------------------------------------------
         AddHandler NewBrowser.ProgressChanged, AddressOf LoadingWeb
@@ -524,11 +685,22 @@ Public Class Form1
         AddHandler Gecko.LauncherDialog.Download, AddressOf LauncherDialog_Download
         AddHandler NewBrowser.CreateWindow, AddressOf BrowCreateWindow
         '-----------------------------------------------------------
+        Dim url As String = Command$()
+        If url = String.Empty Then
+            CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(My.Settings.Homepage)
+        Else
+            url = url.Replace("""", "")
+            If url.Contains("\") Then
+                url = "file:\\\" & url
+            End If
+            CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(url)
+        End If
+        '-----------------------------------------------------------
         If My.Settings.WelcomeScreen = True Then
             My.Settings.WelcomeScreen = False
             CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/welcome.html")
         End If
-
+        Me.ShowIcon = True
     End Sub
 
     Private Sub LauncherDialog_Download(ByVal sender As Object, ByVal e As Gecko.LauncherDialogEvent)
@@ -688,26 +860,37 @@ Public Class Form1
                 CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/new-tab.html")
             ElseIf TextBox1.Text = "about:welcome" Then
                 CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/welcome.html")
+            ElseIf TextBox1.Text = "about:gettingstarted" Then
+                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/getting.html")
             Else
-                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(TextBox1.Text)
+                Dim textArray = TextBox1.Text.Split(" ")
+                If (TextBox1.Text.Contains(".") AndAlso
+                    Not TextBox1.Text.Contains(" ") AndAlso
+                    Not TextBox1.Text.Contains(" .") AndAlso
+                    Not TextBox1.Text.Contains(". ")) OrElse
+                    textArray(0).Contains(":/") OrElse textArray(0).Contains(":\") OrElse textArray(0).Contains(":") Then
+                    CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(TextBox1.Text)
+                Else
+                    CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("https://google.com/search?q=" & TextBox1.Text)
+                End If
             End If
         End If
     End Sub
 
-    Private Sub Panel1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseDown
+    Private Sub Panel1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseDown, Link.MouseDown, DocTitle.MouseDown
         drag = True
         mousex = System.Windows.Forms.Cursor.Position.X - Me.Left
         mousey = System.Windows.Forms.Cursor.Position.Y - Me.Top
     End Sub
 
-    Private Sub Panel1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseMove
+    Private Sub Panel1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseMove, Link.MouseMove, DocTitle.MouseMove
         If drag Then
             Me.Top = System.Windows.Forms.Cursor.Position.Y - mousey
             Me.Left = System.Windows.Forms.Cursor.Position.X - mousex
         End If
     End Sub
 
-    Private Sub Panel1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseUp
+    Private Sub Panel1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseUp, Link.MouseUp, DocTitle.MouseUp
         drag = False
     End Sub
 
@@ -737,15 +920,17 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub DocTitle_MouseHover(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DocTitle.MouseHover
+    Private Sub DocTitle_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DocTitle.Click
         Panel2.Visible = False
+        TextBox1.Focus()
     End Sub
 
-    Private Sub Link_MouseHover(ByVal sender As Object, ByVal e As System.EventArgs) Handles Link.MouseHover
+    Private Sub Link_click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Link.Click
         Panel2.Visible = False
+        TextBox1.Focus()
     End Sub
 
-    Private Sub TextBox1_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles TextBox1.MouseLeave
+    Private Sub TextBox1_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs)
         Panel2.Visible = True
     End Sub
 
@@ -819,6 +1004,7 @@ Public Class Form1
     End Sub
 
     Private Sub CloseTabToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseTabToolStripMenuItem.Click
+        CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("about:blank")
         TabControl1.TabPages.Remove(TabControl1.SelectedTab)
         Try
             If TabControl1.TabPages.Count = 1 Then
@@ -952,10 +1138,26 @@ Public Class Form1
         End Try
     End Sub
 
+    Public Sub EditHome()
+        Try
+            Dim a As String
+            Dim b As String
+            a = "/data/htmldoc/files/spezbrowser/edit.html"
+            b = InStr(TextBox1.Text, a)
+            If b Then
+                Dialog1.TabControl1.SelectedIndex = 3
+                Button1.PerformClick()
+                Dialog1.ShowDialog()
+            End If
+        Catch ex As Exception
+        End Try
+    End Sub
+
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         OpenHistory()
         OpenBookmarks()
         OpenFavs()
+        EditHome()
     End Sub
 
     Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
@@ -1021,7 +1223,7 @@ Public Class Form1
         If TextBox1.Text.Contains("about:") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  " & Link.Text
-        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Then
+        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Or TextBox1.Text.Contains("/data/htmldoc/getting.html") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  Spez Browser Page"
             TextBox1.Text = Nothing
@@ -1075,6 +1277,26 @@ Public Class Form1
         AddHandler NewBrowser.DocumentCompleted, AddressOf Done
         NewBrowser.Navigate(e.Uri)
         AddHandler NewBrowser.CreateWindow, AddressOf BrowCreateWindow
+    End Sub
+
+    Private Sub FileOpenAcoss()
+        My.Computer.Registry.ClassesRoot.CreateSubKey(".html").SetValue("", "HTML File", Microsoft.Win32.RegistryValueKind.String)
+        My.Computer.Registry.ClassesRoot.CreateSubKey("HTML File\shell\open\command").SetValue("", Application.ExecutablePath & " ""%l"" ", Microsoft.Win32.RegistryValueKind.String)
+        My.Computer.Registry.ClassesRoot.CreateSubKey(".htm").SetValue("", "HTM File", Microsoft.Win32.RegistryValueKind.String)
+        My.Computer.Registry.ClassesRoot.CreateSubKey("HTM File\shell\open\command").SetValue("", Application.ExecutablePath & " ""%l"" ", Microsoft.Win32.RegistryValueKind.String)
+    End Sub
+
+    Private Sub TextBox1_LostFocus1(sender As Object, e As EventArgs) Handles TextBox1.LostFocus
+        Panel2.Visible = True
+    End Sub
+
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If Not My.Settings.reseted = True Then
+            My.Settings.State = Me.WindowState
+            My.Settings.Size = Me.Size
+            My.Settings.Position = Me.Location
+            My.Settings.Save()
+        End If
     End Sub
 End Class
 

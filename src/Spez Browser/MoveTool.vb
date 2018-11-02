@@ -18,14 +18,12 @@ Public Class MoveTool
         If s = 0 Then
             S1.Visible = True
             S2.Visible = False
-            S3.Visible = False
             Back_button.Enabled = False
             Next_button.Enabled = True
             Next_button.Text = "Next >"
         ElseIf s = 1 Then
             S1.Visible = True
             S2.Visible = True
-            S3.Visible = False
             Back_button.Enabled = True
             Next_button.Enabled = False
             Next_button.Text = "Import"
@@ -35,20 +33,18 @@ Public Class MoveTool
                 Next_button.Enabled = True
             End If
         ElseIf s = 2 Then
-            Try
-                WebBrowser1.Navigate(OpenFileDialog1.FileName)
-            Catch ex As Exception
-            End Try
+            Label3.Text = "Importing.."
+            Dim aa As String = "file:///" & OpenFileDialog1.FileName
             Back_button.Enabled = False
-            S1.Visible = True
-            S2.Visible = True
-            S3.Visible = True
             Next_button.Text = "Exit"
             Next_button.Enabled = False
             If ProgressBar1.Value = 100 Then
                 Next_button.Enabled = True
-                Label5.Text = "Imported!"
+                Label3.Text = "Imported!"
             End If
+            S1.Visible = True
+            S2.Visible = True
+            WebBrowser1.Navigate(aa)
         ElseIf s >= 3 Then
             Me.Close()
             Me.Refresh()
@@ -57,6 +53,9 @@ Public Class MoveTool
     End Sub
 
     Public Sub ImportBookmarks()
+        Label3.Text = "Importing.."
+        ProgressBar1.Visible = True
+        RichTextBox1.Visible = True
         If RichTextBox1.Text = "" Then
             For Each Ele As HtmlElement In WebBrowser1.Document.GetElementsByTagName("a")
                 Dim s As String = Ele.GetAttribute("href")
@@ -65,7 +64,7 @@ Public Class MoveTool
                         My.Settings.Bookmarks.Add(s)
                         RichTextBox1.AppendText("Bookmark ''" & s & "' added." & vbNewLine)
                     Else
-                        RichTextBox1.AppendText("Bookmark ''" & s & "' skipped. So, don't add it." & vbNewLine)
+                        RichTextBox1.AppendText("Bookmark ''" & s & "' is alerady added. So, skip it." & vbNewLine)
                     End If
                 End If
             Next
@@ -110,6 +109,5 @@ Public Class MoveTool
         Label2.Font = New Font(font.Families(0), Label2.Font.Size)
         Label3.Font = New Font(font.Families(0), Label3.Font.Size)
         Label4.Font = New Font(font.Families(0), Label4.Font.Size)
-        Label5.Font = New Font(font.Families(0), Label5.Font.Size)
     End Sub
 End Class

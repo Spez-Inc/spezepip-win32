@@ -12,7 +12,13 @@ Namespace My
     Partial Friend Class MyApplication
         Protected Overrides Function OnStartup(ByVal eventArgs As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) As Boolean
             Gecko.Xpcom.Initialize("data/engine/")
+            AddHandler Application.UnhandledException, AddressOf MyApplication_UnhandledException
             Return True
         End Function
+
+        Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            On Error Resume Next
+            'Shell("crashreport.exe app=SpezBrowser ver=9.0 msg=" & e.Exception.Message)
+        End Sub
     End Class
 End Namespace

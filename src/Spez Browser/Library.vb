@@ -64,6 +64,7 @@ Public Class Library
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        MoveTool.Dispose()
         MoveTool.ShowDialog()
     End Sub
 End Class

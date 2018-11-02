@@ -146,6 +146,67 @@ Namespace My
                 Me("Favorites") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<ArrayOfString xmlns:xsi=""http://www.w3."& _ 
+            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" />")>  _
+        Public Property ExcludedItems() As Global.System.Collections.Specialized.StringCollection
+            Get
+                Return CType(Me("ExcludedItems"),Global.System.Collections.Specialized.StringCollection)
+            End Get
+            Set
+                Me("ExcludedItems") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Normal")>  _
+        Public Property State() As Global.System.Windows.Forms.FormWindowState
+            Get
+                Return CType(Me("State"),Global.System.Windows.Forms.FormWindowState)
+            End Get
+            Set
+                Me("State") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("800, 600")>  _
+        Public Property Size() As Global.System.Drawing.Size
+            Get
+                Return CType(Me("Size"),Global.System.Drawing.Size)
+            End Get
+            Set
+                Me("Size") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("32, 32")>  _
+        Public Property Position() As Global.System.Drawing.Point
+            Get
+                Return CType(Me("Position"),Global.System.Drawing.Point)
+            End Get
+            Set
+                Me("Position") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property reseted() As Boolean
+            Get
+                Return CType(Me("reseted"),Boolean)
+            End Get
+            Set
+                Me("reseted") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

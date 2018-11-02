@@ -27,13 +27,14 @@ Partial Class PrivateForm1
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button6 = New System.Windows.Forms.Button()
         Me.SettingsStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Link = New System.Windows.Forms.Label()
         Me.DocTitle = New System.Windows.Forms.Label()
+        Me.URLPanel = New System.Windows.Forms.Panel()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
@@ -77,6 +78,7 @@ Partial Class PrivateForm1
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        Me.URLPanel.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabRightClick.SuspendLayout()
@@ -130,15 +132,6 @@ Partial Class PrivateForm1
         Me.ToolTip1.SetToolTip(Me.Button3, "Refresh")
         Me.Button3.UseVisualStyleBackColor = True
         '
-        'TextBox1
-        '
-        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(257, 16)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(424, 29)
-        Me.TextBox1.TabIndex = 1
-        '
         'Button6
         '
         Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -168,8 +161,8 @@ Partial Class PrivateForm1
         Me.Panel1.BackColor = System.Drawing.Color.Transparent
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.Button3)
+        Me.Panel1.Controls.Add(Me.URLPanel)
         Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Controls.Add(Me.TextBox1)
         Me.Panel1.Controls.Add(Me.Button7)
         Me.Panel1.Controls.Add(Me.Button4)
         Me.Panel1.Controls.Add(Me.Button1)
@@ -215,6 +208,30 @@ Partial Class PrivateForm1
         Me.DocTitle.TabIndex = 0
         Me.DocTitle.Text = "Document Title Appears Here."
         Me.DocTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'URLPanel
+        '
+        Me.URLPanel.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.URLPanel.BackgroundImage = Global.Spez_Browser.My.Resources.Resources.searchbar
+        Me.URLPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.URLPanel.Controls.Add(Me.TextBox1)
+        Me.URLPanel.Location = New System.Drawing.Point(257, 16)
+        Me.URLPanel.Name = "URLPanel"
+        Me.URLPanel.Size = New System.Drawing.Size(424, 29)
+        Me.URLPanel.TabIndex = 5
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(7, 7)
+        Me.TextBox1.MaximumSize = New System.Drawing.Size(424, 29)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(410, 15)
+        Me.TextBox1.TabIndex = 1
         '
         'PictureBox1
         '
@@ -565,8 +582,9 @@ Partial Class PrivateForm1
         Me.Name = "PrivateForm1"
         Me.Text = "Spez Browser"
         Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
         Me.Panel2.ResumeLayout(False)
+        Me.URLPanel.ResumeLayout(False)
+        Me.URLPanel.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.TabRightClick.ResumeLayout(False)
@@ -576,7 +594,6 @@ Partial Class PrivateForm1
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents Button3 As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents Button6 As System.Windows.Forms.Button
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents WebBrowser1 As System.Windows.Forms.WebBrowser
@@ -624,5 +641,7 @@ Partial Class PrivateForm1
     Friend WithEvents FavoritesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AddThisWebsiteToFavoritesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowFavoritesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents URLPanel As System.Windows.Forms.Panel
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
 
 End Class

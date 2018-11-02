@@ -62,6 +62,9 @@ Public Class Dialog1
             Button2.Text = "Varsayılanı Uygula"
             OK_Button.Text = "Uygula"
             Cancel_Button.Text = "İptal"
+            TabControl1.TabPages(0).Text = "Genel"
+            TabControl1.TabPages(1).Text = "Temalar"
+            LinkLabel1.Text = "Daha fazla Spez Browser teması al"
             GeckoPreferences.User("intl.accept_languages") = "tr"
         End If
         If My.Settings.Lang = "English" Then
@@ -114,6 +117,9 @@ Public Class Dialog1
             Button2.Text = "Use Deafult"
             OK_Button.Text = "Apply"
             Cancel_Button.Text = "Cancel"
+            TabControl1.TabPages(0).Text = "General"
+            TabControl1.TabPages(1).Text = "Themes"
+            LinkLabel1.Text = "Get More Spez Browser Theme"
             GeckoPreferences.User("intl.accept_languages") = "en-us"
         End If
         If My.Settings.Lang = "Deutsch" Then
@@ -166,6 +172,9 @@ Public Class Dialog1
             Button2.Text = "Übernehmen Standard"
             OK_Button.Text = "Anwenden"
             Cancel_Button.Text = "Stornierung"
+            TabControl1.TabPages(0).Text = "Allgemeines"
+            TabControl1.TabPages(1).Text = "Themen"
+            LinkLabel1.Text = "Holen Sie sich mehr Spez Browser Theme"
             GeckoPreferences.User("intl.accept_languages") = "de"
         End If
         Try
@@ -222,6 +231,56 @@ Public Class Dialog1
             Form1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\bg.png"))
             Form1.FormBorderStyle = Nothing
 
+            'txtbox
+            Form1.URLPanel.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\searchbar.png"))
+            Dim clr As New TextBox
+            Dim rs As String
+            Dim gs As String
+            Dim bs As String
+            clr.Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & My.Settings.Theme & "\rgbtextbox.txt")
+            ''findred
+            Dim a As String
+            Dim b As String
+            a = "R="
+            b = InStr(clr.Text, a)
+            If b Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(a) + 3
+                rs = clr.SelectedText.ToString
+                rs = rs.Remove(0, 2)
+            End If
+            ''findgreen
+            Dim c As String
+            Dim d As String
+            c = "G="
+            d = InStr(clr.Text, c)
+            If d Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(c) + 3
+                gs = clr.SelectedText.ToString
+                gs = gs.Remove(0, 2)
+            End If
+            ''findblue
+            Dim ee As String
+            Dim f As String
+            ee = "B="
+            f = InStr(clr.Text, ee)
+            If f Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(ee) + 3
+                bs = clr.SelectedText.ToString
+                bs = bs.Remove(0, 2)
+            End If
+            ''apply
+            Dim r As Integer = Convert.ToInt64(rs)
+            Dim g As Integer = Convert.ToInt64(gs)
+            Dim bb As Integer = Convert.ToInt64(bs)
+            Form1.TextBox1.BackColor = System.Drawing.Color.FromArgb(r, g, bb)
+            Form1.TextBox1.ForeColor = Color.White
+
             'buttonmain
             Form1.Button1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\back.png"))
             Form1.Button1.Text = ""
@@ -253,6 +312,56 @@ Public Class Dialog1
         Else
             'text
             Form1.DocTitle.ForeColor = Color.Black
+
+            'txtbox
+            Form1.URLPanel.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\searchbar.png"))
+            Dim clr As New TextBox
+            Dim rs As String
+            Dim gs As String
+            Dim bs As String
+            clr.Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\" & My.Settings.Theme & "\rgbtextbox.txt")
+            ''findred
+            Dim a As String
+            Dim b As String
+            a = "R="
+            b = InStr(clr.Text, a)
+            If b Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(a) + 3
+                rs = clr.SelectedText.ToString
+                rs = rs.Remove(0, 2)
+            End If
+            ''findgreen
+            Dim c As String
+            Dim d As String
+            c = "G="
+            d = InStr(clr.Text, c)
+            If d Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(c) + 3
+                gs = clr.SelectedText.ToString
+                gs = gs.Remove(0, 2)
+            End If
+            ''findblue
+            Dim ee As String
+            Dim f As String
+            ee = "B="
+            f = InStr(clr.Text, ee)
+            If f Then
+                clr.Focus()
+                clr.SelectionStart = b - 1
+                clr.SelectionLength = Len(ee) + 3
+                bs = clr.SelectedText.ToString
+                bs = bs.Remove(0, 2)
+            End If
+            ''apply
+            Dim r As Integer = Convert.ToInt64(rs)
+            Dim g As Integer = Convert.ToInt64(gs)
+            Dim bb As Integer = Convert.ToInt64(bs)
+            Form1.TextBox1.BackColor = System.Drawing.Color.FromArgb(r, g, bb)
+            Form1.TextBox1.ForeColor = Color.Black
 
             'form
             Form1.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\" & My.Settings.Theme & "\bg.png"))
@@ -287,7 +396,31 @@ Public Class Dialog1
             Form1.Button8.FlatStyle = FlatStyle.Flat
 
         End If
+        If ListBox2.Items.Contains("Search bar") Then
+            My.Settings.ExcludedItems.Add("Search bar")
+        Else
+            My.Settings.ExcludedItems.Remove("Search bar")
+        End If
+        If ListBox2.Items.Contains("Weather") Then
+            My.Settings.ExcludedItems.Add("Weather")
+        Else
+            My.Settings.ExcludedItems.Remove("Weather")
+        End If
+        If ListBox2.Items.Contains("Library Shortcurts") Then
+            My.Settings.ExcludedItems.Add("Library Shortcurts")
+        Else
+            My.Settings.ExcludedItems.Remove("Library Shortcurts")
+        End If
+        If ListBox2.Items.Contains("News") Then
+            My.Settings.ExcludedItems.Add("News")
+        Else
+            My.Settings.ExcludedItems.Remove("News")
+        End If
         My.Settings.Save()
+        Dim i = CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Url.ToString
+        If i.Contains("/data/htmldoc/new-tab.html") Then
+            CType(Form1.TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Reload()
+        End If
     End Sub
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
@@ -310,7 +443,30 @@ Public Class Dialog1
     Private Sub Dialog1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim font As PrivateFontCollection = New PrivateFontCollection
         font.AddFontFile("data/Font.ttf")
+        ListBox2.Items.Clear()
+        ListBox1.Items.Clear()
         Me.Font = New Font(font.Families(0), 9)
+        If My.Settings.ExcludedItems.Contains("Search bar") Then
+            ListBox2.Items.Add("Search bar")
+        Else
+            ListBox1.Items.Add("Search bar")
+        End If
+        If My.Settings.ExcludedItems.Contains("Weather") Then
+            ListBox2.Items.Add("Weather")
+        Else
+            ListBox1.Items.Add("Weather")
+        End If
+        If My.Settings.ExcludedItems.Contains("Library Shortcurts") Then
+            ListBox2.Items.Add("Library Shortcurts")
+        Else
+            ListBox1.Items.Add("Library Shortcurts")
+        End If
+        If My.Settings.ExcludedItems.Contains("News") Then
+            ListBox2.Items.Add("News")
+        Else
+            ListBox1.Items.Add("News")
+        End If
+
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
@@ -318,47 +474,116 @@ Public Class Dialog1
         Me.Close()
     End Sub
 
-    Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
-        My.Settings.Homepage = "file:\\\" & Application.StartupPath & "\data\htmldoc\new-tab.html"
-        My.Settings.Lang = "English"
-        My.Settings.Theme = "Default"
-        My.Settings.WelcomeScreen = True
-        My.Settings.Save()
-        Dim result As Integer = MessageBox.Show("The Spez Browser needs to be restarted to finish the process. Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    Public Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
+        Dim result As Integer = MessageBox.Show("ALL SETTINGS ABOUT SPEZ BROWSER WILL BE REMOVED FOREVER AND THERE IS NO WAY TO UNDO THIS!" & vbNewLine & vbNewLine & "Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
         If result = DialogResult.OK Then
+            My.Settings.Reset()
+            My.Settings.reseted = True
+            My.Settings.Save()
+            MsgBox("The Spez Browser needs to be restarted to finish the process. Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OK + MessageBoxIcon.Information)
             Application.Restart()
         End If
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        My.Settings.History.Clear()
-        Library.ListBox1.Items.Clear()
-        My.Settings.Save()
+        Dim result As Integer = MessageBox.Show("ALL HISTORY ABOUT SPEZ BROWSER WILL BE REMOVED FOREVER AND THERE IS NO WAY TO UNDO THIS!" & vbNewLine & vbNewLine & "Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+        If result = DialogResult.OK Then
+            My.Settings.History.Clear()
+            Library.ListBox1.Items.Clear()
+            My.Settings.Save()
+        End If
     End Sub
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
-        Dim CookieMan As nsICookieManager
-        CookieMan = Xpcom.GetService(Of nsICookieManager)("@mozilla.org/cookiemanager;1")
-        CookieMan = Xpcom.QueryInterface(Of nsICookieManager)(CookieMan)
-        CookieMan.RemoveAll()
+        Dim result As Integer = MessageBox.Show("ALL SITE COOKIES ABOUT SPEZ BROWSER WILL BE REMOVED FOREVER AND THERE IS NO WAY TO UNDO THIS!" & vbNewLine & vbNewLine & "Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+        If result = DialogResult.OK Then
+            Dim CookieMan As nsICookieManager
+            CookieMan = Xpcom.GetService(Of nsICookieManager)("@;1")
+            CookieMan = Xpcom.QueryInterface(Of nsICookieManager)(CookieMan)
+            CookieMan.RemoveAll()
+        End If
     End Sub
 
-    Private Sub LinkLabel2_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
-        Dim CookieMan As nsICookieManager
-        CookieMan = Xpcom.GetService(Of nsICookieManager)("@mozilla.org/cookiemanager;1")
-        CookieMan = Xpcom.QueryInterface(Of nsICookieManager)(CookieMan)
-        CookieMan.RemoveAll()
-        My.Settings.History.Clear()
-        Library.ListBox1.Items.Clear()
-        My.Settings.Save()
-        My.Settings.Homepage = "file:\\\" & Application.StartupPath & "\data\htmldoc\new-tab.html"
-        My.Settings.Lang = "English"
-        My.Settings.Theme = "Default"
-        My.Settings.WelcomeScreen = True
-        My.Settings.Save()
-        Dim result As Integer = MessageBox.Show("The Spez Browser needs to be restarted to finish the process. Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    Public Sub LinkLabel2_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+        Dim result As Integer = MessageBox.Show("ALL SETTINGS, BOOKMARKS, HISTORY, SITE COOKIES ABOUT SPEZ BROWSER WILL BE REMOVED / RESETED FOREVER AND THERE IS NO WAY TO UNDO THIS!" & vbNewLine & vbNewLine & "Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
         If result = DialogResult.OK Then
+            Dim CookieMan As nsICookieManager
+            CookieMan = Xpcom.GetService(Of nsICookieManager)("@mozilla.org/cookiemanager;1")
+            CookieMan = Xpcom.QueryInterface(Of nsICookieManager)(CookieMan)
+            CookieMan.RemoveAll()
+            My.Settings.History.Clear()
+            Library.ListBox1.Items.Clear()
+            My.Settings.Save()
+            My.Settings.Bookmarks.Clear()
+            My.Settings.Bookmarks.Add("https://facebook.com")
+            My.Settings.Bookmarks.Add("https://google.com")
+            My.Settings.Bookmarks.Add("https://spezcomputer.weebly.com")
+            My.Settings.Bookmarks.Add("https://spezlinux.weebly.com")
+            My.Settings.Bookmarks.Add("https://spezcomputerhelp.weebly.com")
+            My.Settings.Bookmarks.Add("https://youtube.com")
+            Library.ListBox2.Items.Clear()
+            For Each item In My.Settings.Bookmarks
+                Library.ListBox2.Items.Add(item)
+            Next
+            My.Settings.Save()
+            My.Settings.Reset()
+            My.Settings.reseted = True
+            My.Settings.Save()
+            MessageBox.Show("The Spez Browser needs to be restarted to finish the process. Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Application.Restart()
+        End If
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Dim item = ListBox1.SelectedItem
+        Threading.Thread.Sleep(500)
+        ListBox1.Items.Remove(item)
+        ListBox2.Items.Add(item)
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Dim item = ListBox2.SelectedItem
+        Threading.Thread.Sleep(500)
+        ListBox2.Items.Remove(item)
+        ListBox1.Items.Add(item)
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Dim result As Integer = MessageBox.Show("ALL BOOKMARKS ABOUT SPEZ BROWSER WILL BE RESETED FOREVER AND THERE IS NO WAY TO UNDO THIS!" & vbNewLine & vbNewLine & "Press ''OK'' to continue.", "Spez Browser", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+        If result = DialogResult.OK Then
+            My.Settings.Bookmarks.Clear()
+            My.Settings.Bookmarks.Add("https://facebook.com")
+            My.Settings.Bookmarks.Add("https://google.com")
+            My.Settings.Bookmarks.Add("https://spezcomputer.weebly.com")
+            My.Settings.Bookmarks.Add("https://spezlinux.weebly.com")
+            My.Settings.Bookmarks.Add("https://spezcomputerhelp.weebly.com")
+            My.Settings.Bookmarks.Add("https://youtube.com")
+            Library.ListBox2.Items.Clear()
+            For Each item In My.Settings.Bookmarks
+                Library.ListBox2.Items.Add(item)
+            Next
+            My.Settings.Save()
+        End If
+    End Sub
+
+    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
+        Dim mb As Double
+        Dim b2mb As Double = 1024 * 1024
+        mb = My.Computer.Info.TotalPhysicalMemory / b2mb
+        Dim RamMB As String = String.Format("{0:f1}", mb) - 0.5
+        'RamMB = 2031
+        If RamMB < 2032 Then
+            If TabControl1.SelectedIndex = 1 Then
+                If My.Settings.Lang = "English" Then
+                    MsgBox("Only system style themes are accepted because there is very low system memory for themes.", vbExclamation, "Spez Browser")
+                End If
+                If My.Settings.Lang = "Türkçe" Then
+                    MsgBox("Temalar için çok düşük sistem belleği olduğundan sadece sistem stili temaları kabul edilir.", vbExclamation, "Spez Browser")
+                End If
+                If My.Settings.Lang = "Deutsch" Then
+                    MsgBox("Es werden nur Systemstil-Themes akzeptiert, da der Systemspeicher für Themes sehr niedrig ist.", vbExclamation, "Spez Browser")
+                End If
+            End If
         End If
     End Sub
 End Class

@@ -27,7 +27,6 @@ Partial Class Form1
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button6 = New System.Windows.Forms.Button()
         Me.SettingsStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -62,6 +61,8 @@ Partial Class Form1
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Link = New System.Windows.Forms.Label()
         Me.DocTitle = New System.Windows.Forms.Label()
+        Me.URLPanel = New System.Windows.Forms.Panel()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.LeftR = New System.Windows.Forms.Panel()
@@ -80,6 +81,7 @@ Partial Class Form1
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        Me.URLPanel.SuspendLayout()
         Me.TabRightClick.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -131,17 +133,6 @@ Partial Class Form1
         Me.ToolTip1.SetToolTip(Me.Button3, "Refresh")
         Me.Button3.UseVisualStyleBackColor = True
         '
-        'TextBox1
-        '
-        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(257, 16)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(424, 29)
-        Me.TextBox1.TabIndex = 1
-        '
         'Button6
         '
         Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -178,7 +169,7 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.Button6)
         Me.Panel1.Controls.Add(Me.Button8)
         Me.Panel1.Controls.Add(Me.Panel2)
-        Me.Panel1.Controls.Add(Me.TextBox1)
+        Me.Panel1.Controls.Add(Me.URLPanel)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(2, 2)
         Me.Panel1.Name = "Panel1"
@@ -248,7 +239,7 @@ Partial Class Form1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewTabToolStripMenuItem1, Me.NewWindowToolStripMenuItem, Me.NewPrivateBrowsingWindowToolStripMenuItem, Me.ToolStripSeparator4, Me.PrintToolStripMenuItem, Me.PrintPreviewToolStripMenuItem, Me.ExitPrintPreviewToolStripMenuItem, Me.SavePageToolStripMenuItem, Me.HTMLEditorToolStripMenuItem, Me.ToolStripSeparator2, Me.HistoryToolStripMenuItem, Me.BookmarksToolStripMenuItem, Me.FavoritesToolStripMenuItem, Me.ToolStripSeparator3, Me.SettingsStripMenuItem1, Me.SupportToolStripMenuItem, Me.AboutSpezBrowserToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(303, 380)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(303, 358)
         '
         'NewTabToolStripMenuItem1
         '
@@ -419,6 +410,7 @@ Partial Class Form1
         Me.Panel2.Controls.Add(Me.Link)
         Me.Panel2.Controls.Add(Me.DocTitle)
         Me.Panel2.Location = New System.Drawing.Point(257, 16)
+        Me.Panel2.MaximumSize = New System.Drawing.Size(424, 29)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(424, 29)
         Me.Panel2.TabIndex = 3
@@ -445,6 +437,30 @@ Partial Class Form1
         Me.DocTitle.TabIndex = 0
         Me.DocTitle.Text = "Document Title Appears Here."
         Me.DocTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'URLPanel
+        '
+        Me.URLPanel.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.URLPanel.BackgroundImage = Global.Spez_Browser.My.Resources.Resources.searchbar
+        Me.URLPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.URLPanel.Controls.Add(Me.TextBox1)
+        Me.URLPanel.Location = New System.Drawing.Point(257, 16)
+        Me.URLPanel.Name = "URLPanel"
+        Me.URLPanel.Size = New System.Drawing.Size(424, 29)
+        Me.URLPanel.TabIndex = 6
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(162, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(7, 7)
+        Me.TextBox1.MaximumSize = New System.Drawing.Size(424, 29)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(410, 15)
+        Me.TextBox1.TabIndex = 1
         '
         'WebBrowser1
         '
@@ -573,10 +589,11 @@ Partial Class Form1
         Me.Name = "Form1"
         Me.Text = "Spez Browser"
         Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
+        Me.URLPanel.ResumeLayout(False)
+        Me.URLPanel.PerformLayout()
         Me.TabRightClick.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -584,7 +601,6 @@ Partial Class Form1
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents Button3 As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents Button6 As System.Windows.Forms.Button
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents WebBrowser1 As System.Windows.Forms.WebBrowser
@@ -633,5 +649,7 @@ Partial Class Form1
     Friend WithEvents BookmarksToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AddThisWebsiteToBookmarksToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowBookmarksToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents URLPanel As System.Windows.Forms.Panel
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
 
 End Class

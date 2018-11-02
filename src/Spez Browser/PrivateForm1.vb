@@ -95,6 +95,12 @@ Public Class PrivateForm1
         AddHandler NewBrowser.DocumentCompleted, AddressOf Done
         NewBrowser.Navigate("file:///" & Application.StartupPath & "/data/htmldoc/private-mode.html")
         AddHandler NewBrowser.CreateWindow, AddressOf BrowCreateWindow
+        Dim field = GetType(GeckoWebBrowser).GetField("WebBrowser")
+        If field IsNot Nothing Then
+            Dim val = field.GetValue(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser))
+            Dim nsIWebBrowser As nsIWebBrowser = DirectCast(val, nsIWebBrowser)
+            Xpcom.QueryInterface(Of nsILoadContext)(nsIWebBrowser).SetPrivateBrowsing(True)
+        End If
     End Sub
     Private Sub LoadingWeb(ByVal sender As Object, ByVal e As GeckoProgressEventArgs)
         ProgressBar1.Show()
@@ -151,7 +157,7 @@ Public Class PrivateForm1
         If TextBox1.Text.Contains("about:") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  " & Link.Text
-        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Then
+        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Or TextBox1.Text.Contains("/data/htmldoc/getting.html") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  Spez Browser Page"
             TextBox1.Text = Nothing
@@ -192,27 +198,58 @@ Public Class PrivateForm1
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.Location = Form1.Location
-        If My.Computer.Info.OSFullName.Contains("Windows XP") Then
-            MsgBox("Spez Browser no more supports Windows XP and Vista.", vbCritical, "Sorry for that.")
-            End
-        End If
-        If My.Computer.Info.OSFullName.Contains("Windows Vista") Then
-            MsgBox("Spez Browser no more supports Windows XP and Vista.", vbCritical, "Sorry for that.")
-            End
-        End If
-
-        Dim field = GetType(GeckoWebBrowser).GetField("WebBrowser")
-        If field IsNot Nothing Then
-            Dim val = field.GetValue(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser))
-            Dim nsIWebBrowser As nsIWebBrowser = DirectCast(val, nsIWebBrowser)
-            Xpcom.QueryInterface(Of nsILoadContext)(nsIWebBrowser).SetPrivateBrowsing(True)
-        End If
-
-        '-----------------------------------------------------------
-
         'text
         DocTitle.ForeColor = Color.White
+
+        'txtbox
+        URLPanel.BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\dark\searchbar.png"))
+        Dim clr As New TextBox
+        Dim rs As String
+        Dim gs As String
+        Dim bs As String
+        clr.Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\themes\dark\rgbtextbox.txt")
+        ''findred
+        Dim a As String
+        Dim b As String
+        a = "R="
+        b = InStr(clr.Text, a)
+        If b Then
+            clr.Focus()
+            clr.SelectionStart = b - 1
+            clr.SelectionLength = Len(a) + 3
+            rs = clr.SelectedText.ToString
+            rs = rs.Remove(0, 2)
+        End If
+        ''findgreen
+        Dim c As String
+        Dim d As String
+        c = "G="
+        d = InStr(clr.Text, c)
+        If d Then
+            clr.Focus()
+            clr.SelectionStart = b - 1
+            clr.SelectionLength = Len(c) + 3
+            gs = clr.SelectedText.ToString
+            gs = gs.Remove(0, 2)
+        End If
+        ''findblue
+        Dim ee As String
+        Dim f As String
+        ee = "B="
+        f = InStr(clr.Text, ee)
+        If f Then
+            clr.Focus()
+            clr.SelectionStart = b - 1
+            clr.SelectionLength = Len(ee) + 3
+            bs = clr.SelectedText.ToString
+            bs = bs.Remove(0, 2)
+        End If
+        ''apply
+        Dim r As Integer = Convert.ToInt64(rs)
+        Dim g As Integer = Convert.ToInt64(gs)
+        Dim bb As Integer = Convert.ToInt64(bs)
+        TextBox1.BackColor = System.Drawing.Color.FromArgb(r, g, bb)
+        TextBox1.ForeColor = Color.White
 
         'form
         BackgroundImage = Image.FromFile(System.IO.Path.Combine(Application.StartupPath, "themes\dark\bg.png"))
@@ -309,6 +346,9 @@ Public Class PrivateForm1
             Dialog1.Button2.Text = "Varsayılanı Uygula"
             Dialog1.OK_Button.Text = "Uygula"
             Dialog1.Cancel_Button.Text = "İptal"
+            Dialog1.TabControl1.TabPages(0).Text = "Genel"
+            Dialog1.TabControl1.TabPages(1).Text = "Temalar"
+            Dialog1.LinkLabel1.Text = "Daha fazla Spez Browser teması al"
             GeckoPreferences.User("intl.accept_languages") = "tr"
         End If
         If My.Settings.Lang = "English" Then
@@ -335,7 +375,7 @@ Public Class PrivateForm1
             ExitToolStripMenuItem.Text = "Exit"
             Library.TabPage1.Text = "History"
             Library.TabPage2.Text = "Bookmarks"
-            Library.TabPage2.Text = "Favorites"
+            Library.TabPage3.Text = "Favorites"
             Library.Button2.Text = "Remove From History"
             Library.Button3.Text = "Go to Website"
             Library.Button4.Text = "Go to Website"
@@ -361,6 +401,9 @@ Public Class PrivateForm1
             Dialog1.Button2.Text = "Use Deafult"
             Dialog1.OK_Button.Text = "Apply"
             Dialog1.Cancel_Button.Text = "Cancel"
+            Dialog1.TabControl1.TabPages(0).Text = "General"
+            Dialog1.TabControl1.TabPages(1).Text = "Themes"
+            Dialog1.LinkLabel1.Text = "Get More Spez Browser Theme"
             GeckoPreferences.User("intl.accept_languages") = "en-us"
         End If
         If My.Settings.Lang = "Deutsch" Then
@@ -413,6 +456,9 @@ Public Class PrivateForm1
             Dialog1.Button2.Text = "Übernehmen Standard"
             Dialog1.OK_Button.Text = "Anwenden"
             Dialog1.Cancel_Button.Text = "Stornierung"
+            Dialog1.TabControl1.TabPages(0).Text = "Allgemeines"
+            Dialog1.TabControl1.TabPages(1).Text = "Themen"
+            Dialog1.LinkLabel1.Text = "Holen Sie sich mehr Spez Browser Theme"
             GeckoPreferences.User("intl.accept_languages") = "de"
         End If
         '-----------------------------------------------------------
@@ -435,7 +481,7 @@ Public Class PrivateForm1
         TabControl1.Font = New Font(font.Families(0), 9)
         TabRightClick.Font = New Font(font.Families(0), 9)
         ContextMenuStrip1.Font = New Font(font.Families(0), 9)
-        TextBox1.Font = New Font(font.Families(0), 14)
+        TextBox1.Font = New Font(font.Families(0), TextBox1.Font.Size)
         Me.Font = New Font(font.Families(0), 8)
         '-----------------------------------------------------------
         AddHandler NewBrowser.ProgressChanged, AddressOf LoadingWeb
@@ -445,6 +491,26 @@ Public Class PrivateForm1
         If My.Settings.WelcomeScreen = True Then
             My.Settings.WelcomeScreen = False
             CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/welcome.html")
+        End If
+        '-----------------------------------------------------------
+        Dim url As String = Command$()
+        If Not Environment.GetCommandLineArgs.Count = 1 Then
+            url = url.Replace("--priv", "")
+            url = url.Replace("""", "")
+            If url.StartsWith(" ") Then
+                url = url.Remove(0, 1)
+            End If
+            If url.Contains("\") Then
+                url = "file:\\\" & url
+            End If
+            CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(url)
+        End If
+        '-----------------------------------------------------------
+        Dim field = GetType(GeckoWebBrowser).GetField("WebBrowser")
+        If field IsNot Nothing Then
+            Dim val = field.GetValue(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser))
+            Dim nsIWebBrowser As nsIWebBrowser = DirectCast(val, nsIWebBrowser)
+            Xpcom.QueryInterface(Of nsILoadContext)(nsIWebBrowser).SetPrivateBrowsing(True)
         End If
     End Sub
 
@@ -515,6 +581,12 @@ Public Class PrivateForm1
         TabControl1.SelectedTab = NewTab
         AddHandler NewBrowser.ProgressChanged, AddressOf LoadingWeb
         AddHandler NewBrowser.DocumentCompleted, AddressOf Done
+        Dim field = GetType(GeckoWebBrowser).GetField("WebBrowser")
+        If field IsNot Nothing Then
+            Dim val = field.GetValue(CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser))
+            Dim nsIWebBrowser As nsIWebBrowser = DirectCast(val, nsIWebBrowser)
+            Xpcom.QueryInterface(Of nsILoadContext)(nsIWebBrowser).SetPrivateBrowsing(True)
+        End If
     End Sub
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
@@ -590,26 +662,39 @@ Public Class PrivateForm1
         If e.KeyCode = Keys.Enter Then
             If TextBox1.Text = "about:spezbrowabout" Then
                 About.ShowDialog()
+            ElseIf TextBox1.Text = "about:welcome" Then
+                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/welcome.html")
+            ElseIf TextBox1.Text = "about:gettingstarted" Then
+                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("file:///" & Application.StartupPath & "/data/htmldoc/getting.html")
             Else
-                CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(TextBox1.Text)
+                Dim textArray = TextBox1.Text.Split(" ")
+                If (TextBox1.Text.Contains(".") AndAlso
+                    Not TextBox1.Text.Contains(" ") AndAlso
+                    Not TextBox1.Text.Contains(" .") AndAlso
+                    Not TextBox1.Text.Contains(". ")) OrElse
+                    textArray(0).Contains(":/") OrElse textArray(0).Contains(":\") OrElse textArray(0).Contains(":") Then
+                    CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate(TextBox1.Text)
+                Else
+                    CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("https://google.com/search?q=" & TextBox1.Text)
+                End If
             End If
         End If
     End Sub
 
-    Private Sub Panel1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseDown
+    Private Sub Panel1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseDown, Link.MouseDown, DocTitle.MouseDown
         drag = True
         mousex = System.Windows.Forms.Cursor.Position.X - Me.Left
         mousey = System.Windows.Forms.Cursor.Position.Y - Me.Top
     End Sub
 
-    Private Sub Panel1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseMove
+    Private Sub Panel1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseMove, Link.MouseMove, DocTitle.MouseMove
         If drag Then
             Me.Top = System.Windows.Forms.Cursor.Position.Y - mousey
             Me.Left = System.Windows.Forms.Cursor.Position.X - mousex
         End If
     End Sub
 
-    Private Sub Panel1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseUp
+    Private Sub Panel1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseUp, Link.MouseUp, DocTitle.MouseUp
         drag = False
     End Sub
 
@@ -639,15 +724,17 @@ Public Class PrivateForm1
         End If
     End Sub
 
-    Private Sub DocTitle_MouseHover(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DocTitle.MouseHover
+    Private Sub DocTitle_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DocTitle.Click
         Panel2.Visible = False
+        TextBox1.Focus()
     End Sub
 
-    Private Sub Link_MouseHover(ByVal sender As Object, ByVal e As System.EventArgs) Handles Link.MouseHover
+    Private Sub Link_click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Link.Click
         Panel2.Visible = False
+        TextBox1.Focus()
     End Sub
 
-    Private Sub TextBox1_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles TextBox1.MouseLeave
+    Private Sub TextBox1_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs)
         Panel2.Visible = True
     End Sub
 
@@ -719,6 +806,7 @@ Public Class PrivateForm1
     End Sub
 
     Private Sub CloseTabToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseTabToolStripMenuItem.Click
+        CType(TabControl1.SelectedTab.Controls.Item(0), GeckoWebBrowser).Navigate("about:blank")
         TabControl1.TabPages.Remove(TabControl1.SelectedTab)
         Try
             If TabControl1.TabPages.Count = 1 Then
@@ -812,6 +900,8 @@ Public Class PrivateForm1
         Catch ex As Exception
 
         End Try
+        Form1.WindowState = Me.WindowState
+        Form1.Size = Me.Size
     End Sub
 
     Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
@@ -822,7 +912,7 @@ Public Class PrivateForm1
         If TextBox1.Text.Contains("about:") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  " & Link.Text
-        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Then
+        ElseIf TextBox1.Text.Contains("/data/htmldoc/new-tab.html") Or TextBox1.Text.Contains("/data/htmldoc/welcome.html") Or TextBox1.Text.Contains("/data/htmldoc/private-mode.html") Or TextBox1.Text.Contains("/data/htmldoc/getting.html") Then
             Link.ForeColor = Color.DodgerBlue
             Link.Text = "🌐  Spez Browser Page"
             TextBox1.Text = Nothing
@@ -876,6 +966,10 @@ Public Class PrivateForm1
         AddHandler NewBrowser.DocumentCompleted, AddressOf Done
         NewBrowser.Navigate(e.Uri)
         AddHandler NewBrowser.CreateWindow, AddressOf BrowCreateWindow
+    End Sub
+
+    Private Sub TextBox1_LostFocus1(sender As Object, e As EventArgs) Handles TextBox1.LostFocus
+        Panel2.Visible = True
     End Sub
 End Class
 

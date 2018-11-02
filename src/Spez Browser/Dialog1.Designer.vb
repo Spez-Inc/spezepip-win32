@@ -44,11 +44,20 @@ Partial Class Dialog1
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Button8 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.ListBox2 = New System.Windows.Forms.ListBox()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -57,6 +66,8 @@ Partial Class Dialog1
         Me.TabPage2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -127,7 +138,7 @@ Partial Class Dialog1
         'TextBox1
         '
         Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.Location = New System.Drawing.Point(6, 19)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(309, 20)
@@ -158,7 +169,7 @@ Partial Class Dialog1
         'ComboBox1
         '
         Me.ComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"English", "Türkçe", "Deutsch"})
@@ -170,11 +181,12 @@ Partial Class Dialog1
         'TabControl1
         '
         Me.TabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Location = New System.Drawing.Point(12, 12)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -254,6 +266,7 @@ Partial Class Dialog1
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Button8)
         Me.GroupBox3.Controls.Add(Me.Button5)
         Me.GroupBox3.Controls.Add(Me.Button4)
         Me.GroupBox3.Controls.Add(Me.Button3)
@@ -264,13 +277,24 @@ Partial Class Dialog1
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Custom Cleaning"
         '
+        'Button8
+        '
+        Me.Button8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button8.Location = New System.Drawing.Point(6, 46)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(308, 23)
+        Me.Button8.TabIndex = 4
+        Me.Button8.Text = "Reset the bookmarks"
+        Me.Button8.UseVisualStyleBackColor = True
+        '
         'Button5
         '
         Me.Button5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button5.Location = New System.Drawing.Point(6, 91)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button5.Location = New System.Drawing.Point(6, 100)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(308, 32)
+        Me.Button5.Size = New System.Drawing.Size(308, 23)
         Me.Button5.TabIndex = 3
         Me.Button5.Text = "Clear the Browser Settings"
         Me.Button5.UseVisualStyleBackColor = True
@@ -278,10 +302,10 @@ Partial Class Dialog1
         'Button4
         '
         Me.Button4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button4.Location = New System.Drawing.Point(6, 19)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(308, 32)
+        Me.Button4.Size = New System.Drawing.Size(308, 23)
         Me.Button4.TabIndex = 2
         Me.Button4.Text = "Clear the Cookies"
         Me.Button4.UseVisualStyleBackColor = True
@@ -289,10 +313,10 @@ Partial Class Dialog1
         'Button3
         '
         Me.Button3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button3.Location = New System.Drawing.Point(6, 55)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button3.Location = New System.Drawing.Point(6, 73)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(308, 32)
+        Me.Button3.Size = New System.Drawing.Size(308, 23)
         Me.Button3.TabIndex = 1
         Me.Button3.Text = "Clear the History"
         Me.Button3.UseVisualStyleBackColor = True
@@ -315,6 +339,86 @@ Partial Class Dialog1
         Me.Label2.Size = New System.Drawing.Size(89, 13)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "To clear all data; "
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.GroupBox4)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(332, 158)
+        Me.TabPage4.TabIndex = 3
+        Me.TabPage4.Text = "New Tab"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.Button6)
+        Me.GroupBox4.Controls.Add(Me.Button7)
+        Me.GroupBox4.Controls.Add(Me.Label4)
+        Me.GroupBox4.Controls.Add(Me.Label3)
+        Me.GroupBox4.Controls.Add(Me.ListBox2)
+        Me.GroupBox4.Controls.Add(Me.ListBox1)
+        Me.GroupBox4.Location = New System.Drawing.Point(6, 6)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(320, 146)
+        Me.GroupBox4.TabIndex = 4
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Widgets"
+        '
+        'Button6
+        '
+        Me.Button6.Location = New System.Drawing.Point(132, 32)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(56, 50)
+        Me.Button6.TabIndex = 2
+        Me.Button6.Text = "Exclude item"
+        Me.Button6.UseVisualStyleBackColor = True
+        '
+        'Button7
+        '
+        Me.Button7.Location = New System.Drawing.Point(132, 90)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(56, 50)
+        Me.Button7.TabIndex = 2
+        Me.Button7.Text = "Inculde item"
+        Me.Button7.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.ForeColor = System.Drawing.Color.Gray
+        Me.Label4.Location = New System.Drawing.Point(191, 16)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(45, 13)
+        Me.Label4.TabIndex = 1
+        Me.Label4.Text = "Exclude"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.ForeColor = System.Drawing.Color.Gray
+        Me.Label3.Location = New System.Drawing.Point(6, 16)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(42, 13)
+        Me.Label3.TabIndex = 1
+        Me.Label3.Text = "Include"
+        '
+        'ListBox2
+        '
+        Me.ListBox2.FormattingEnabled = True
+        Me.ListBox2.Location = New System.Drawing.Point(194, 32)
+        Me.ListBox2.Name = "ListBox2"
+        Me.ListBox2.Size = New System.Drawing.Size(120, 108)
+        Me.ListBox2.TabIndex = 0
+        '
+        'ListBox1
+        '
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Location = New System.Drawing.Point(6, 32)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(120, 108)
+        Me.ListBox1.TabIndex = 0
         '
         'Dialog1
         '
@@ -343,6 +447,9 @@ Partial Class Dialog1
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -371,5 +478,14 @@ Partial Class Dialog1
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Button5 As System.Windows.Forms.Button
     Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
+    Friend WithEvents Button6 As System.Windows.Forms.Button
+    Friend WithEvents Button7 As System.Windows.Forms.Button
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents ListBox2 As System.Windows.Forms.ListBox
+    Friend WithEvents Button8 As System.Windows.Forms.Button
 
 End Class

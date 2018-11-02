@@ -253,6 +253,7 @@
     <None Include="Resources\spez browser icon.ico" />
     <None Include="Resources\aaa.png" />
     <None Include="Resources\aaaa.png" />
+    <None Include="Resources\searchbar.png" />
     <Content Include="spez browser icon2.ico" />
     <Content Include="spezbrowpriv.ico" />
     <None Include="Resources\menu icon.png" />
